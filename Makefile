@@ -29,3 +29,7 @@ compile :
 run :
 	$(EXEC) -cp "$(CLASS);$(LIB)/$(JDBC)" $(MAIN)
 
+
+mysql :
+	sudo service mysql start
+

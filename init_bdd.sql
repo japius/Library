@@ -9,6 +9,15 @@ drop table if exists auteur cascade;
 drop table if exists oeuvre cascade;
 
 
+
+create table auteur(
+	id_auteur serial primary key,
+	nom varchar(100),
+	prenom varchar(100),
+	annee int
+);
+
+
 create table oeuvre(
 	id_oeuvre serial primary key,
 	titre varchar(100),
@@ -17,12 +26,6 @@ create table oeuvre(
 	FOREIGN KEY (id_auteur) REFERENCES auteur(id_auteur)
 );
 
-create table auteur(
-	id_auteur serial primary key,
-	nom varchar(100),
-	prenom varchar(100),
-	annee int
-);
 
 create table edition(
 	ISBN bigint unsigned unique not null primary key,
@@ -47,7 +50,7 @@ create table utilisateur(
 	id_utilisateur serial primary key,
 	nom varchar(100),
 	prenom varchar(100),
-	mail varchar(320),
+	mail varchar(320) unique,
 	password varchar(500),
 	id_categorie bigint unsigned,
 	FOREIGN KEY (id_categorie) REFERENCES categorie(id_categorie)

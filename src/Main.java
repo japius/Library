@@ -16,13 +16,11 @@ import java.security.SecureRandom;
 
 public class Main extends Application{
 
-    static SqlRequest mainDatabase;
-    static boolean noGraphic = false;
+    static Library library;
+    static boolean noGraphic = true;
 	
 	public static void main(String[] args) throws SQLException{
-		System.out.println("Lancement du main");
-		mainDatabase = new SqlRequest("library","mejane","password");
-		mainDatabase.connect();
+		library = new Library();
 
         if(noGraphic)
             noGraphicVersion(args);
@@ -33,7 +31,7 @@ public class Main extends Application{
 
 
     public static void noGraphicVersion(String[] args) throws SQLException{
-        ArrayList<User> users = User.getAllUsers(mainDatabase);
+        /*ArrayList<User> users = User.getAllUsers(mainDatabase);
         for(User e : users){
             System.out.println("------");
             e.print();
@@ -43,7 +41,9 @@ public class Main extends Application{
         for(Book e : books){
             System.out.println("------");
             e.print();
-        }
+        }*/
+        System.out.println(library.connect("pierre.mej@gmail.com","mypass"));
+        System.out.println(library.connect("pierre.mej@gmail.com","mpass"));
         System.exit(0);
     }
 
@@ -67,7 +67,7 @@ public class Main extends Application{
         });
         */
         UserView table = new UserView();
-        table.fillView(User.getAllUsers(mainDatabase));
+        //table.fillView(User.getAllUsers(mainDatabase));
         StackPane root = new StackPane();
         root.getChildren().add(table);
 
@@ -79,6 +79,7 @@ public class Main extends Application{
     @Override
     public void stop(){
         System.out.println("Stage is closing");
-        mainDatabase.close();
+        library.close();
+
     }
 }

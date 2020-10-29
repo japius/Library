@@ -37,7 +37,7 @@ public class User implements DataTable{
 
 	//Récupération de la liste complete des utilisateurs
 
-	public static ArrayList<User> getAllUsers(SqlRequest sqlRequest){
+	public static ArrayList<User> getListUsers(SqlRequest sqlRequest){
 		ArrayList<User> res = new ArrayList<User>();
 		String query = basicSelect;
 		try{
@@ -58,7 +58,8 @@ public class User implements DataTable{
 
 	public static User getUserByMail(String mail, SqlRequest sqlRequest)throws SQLException{
 		ResultSet rs = getByMail(mail,sqlRequest);
-		rs.next();
+		if(!rs.next())
+			return null;
 		return new User(rs);
 	}
 
@@ -81,7 +82,7 @@ public class User implements DataTable{
 	//Ajouter un utilisateur
 	public static int insertValue(SqlRequest sqlRequest, String name, String surename, String mail, String password, long id_category){
 		String query = String.format("Insert into utilisateur(nom, prenom, mail, password, id_categorie) values ( '%s', '%s','%s','%s', '%d')",
-				name, surename,mail,password,id_category);
+				name, surename,mail,encryptPass(password),id_category);
 
 		int res = sqlRequest.executeUpdate(query);
 		if(res < 0 ) return -2;
@@ -107,8 +108,8 @@ public class User implements DataTable{
 		return str; //XXX A modifier
 	}
 
-	private static boolean comparePass(String str1, String str2){
-		return str1.equals(str2);//XXX A modifier
+	public boolean comparePass(String str){
+		return this.password.equals(str);//XXX A modifier
 	}
 
 

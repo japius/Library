@@ -84,9 +84,14 @@ public class AuthorTable extends MyTableView<Author>{
 
    
   UpdateAuthor(Author author){
-    super("Modification d'un categorie",author);
+    super("Modification d'un auteur",author);
   }
-  protected void init(Author Author){
+
+  UpdateAuthor(){
+    super("Creation d'un auteur",new Author(),true);
+  }
+
+  protected void init(Author author){
     //init champs
     this.author = author;
     firstname = new TextField(author.getFirstname());

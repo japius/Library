@@ -2,10 +2,10 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Author extends DataTable{
-	private long id;
-	private String firstname;
-	private String lastname;
-	private int year;
+	private long id = 0;
+	private String firstname = null;
+	private String lastname = null;
+	private int year = 0;
 
 	private static final String basicSelect = "Select * from auteur";
 
@@ -20,6 +20,9 @@ public class Author extends DataTable{
 			e.printStackTrace();
 			// XXX a revoir
 		}
+	}
+
+	public Author(){
 	}
 
 	//Getters
@@ -71,9 +74,10 @@ public class Author extends DataTable{
 
 
 	//Ajouter un auteur
-	public static int insertValue(SqlRequest sqlRequest, String firstname, String lastname, int year){
+	public int insertValue(SqlRequest sqlRequest){
+		System.out.println("Je passe dans l'insertValueAut");
 		String query = String.format("Insert into auteur(nom, prenom, annee) values ( '%s', '%s', '%d')",
-				lastname, firstname, year);
+			lastname, firstname, year);
 
 		int res = sqlRequest.executeUpdate(query);
 		if(res < 0 ) return -999;

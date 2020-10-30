@@ -21,4 +21,6 @@ public abstract class DataTable{
 	}
 
 	public abstract int updateValue(SqlRequest sqlRequest);
+
+	public abstract int insertValue(SqlRequest sqlRequest);
 }

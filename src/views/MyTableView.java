@@ -34,8 +34,10 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
 
 		protected Stage popupwindow;
 		protected Label errorLabel;
+		protected boolean newItem;
 		
-		protected UpdatePopUp(String name, K item){
+		protected UpdatePopUp(String name, K item, boolean newItem){
+			this.newItem = newItem;
 			popupwindow=new Stage();
         	popupwindow.initModality(Modality.APPLICATION_MODAL);
   			popupwindow.setTitle(name);
@@ -73,6 +75,10 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
         	popupwindow.showAndWait();
 		}
 
+		protected UpdatePopUp(String name, K item){
+			this(name,item,false);
+		}
+
 		protected abstract void init(K item);
 		protected abstract Control[] getControls();
 		protected abstract String[] getNames();
@@ -81,17 +87,24 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
 
 
 		protected void validate(){
+			System.out.println("Voici newItem "+newItem);
 		    String error = changeItem();
 		    if(error != null){
 		    	errorLabel.setText(error);
 		    	return;
 		    }
-		    int i = Main.library.updateData(getItem());
+		    int i = 0;
+		    if(newItem){
+		    	i = Main.library.insertData(getItem());
+		    }else{
+		    	i = Main.library.updateData(getItem());
+		    }
 		    if(i < 0){
 		    	errorLabel.setText(DataTable.errorInsert(i));
 		    	return;
 		    }
 
+		    refill();
 		    refresh();
 		    close();
 

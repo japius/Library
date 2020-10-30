@@ -85,8 +85,14 @@ public class CategoryTable extends MyTableView<Category>{
 
    
   UpdateCategory(Category category){
-    super("Modification d'un categorie",category);
+    super("Modification d'une categorie",category);
   }
+
+  UpdateCategory(){
+    super("Creation d'une categorie",new Category(),true);
+  }
+
+
   protected void init(Category category){
     //init champs
     this.category = category;

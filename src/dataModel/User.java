@@ -26,6 +26,8 @@ public class User extends DataTable{
 		}
 	}
 
+	public User(){}
+
 	//Getters
 
 	public long getId(){return id;}
@@ -93,12 +95,12 @@ public class User extends DataTable{
 
 
 	//Ajouter un utilisateur
-	public static int insertValue(SqlRequest sqlRequest, String name, String surename, String mail, String password, long id_category){
+	public int insertValue(SqlRequest sqlRequest){
 		int tmp = isValideMail(sqlRequest, mail);
 		if(tmp<0) return tmp;
 
 		String query = String.format("Insert into utilisateur(nom, prenom, mail, password, id_categorie) values ( '%s', '%s','%s','%s', '%d')",
-				surename, name,mail,encryptPass(password),id_category);
+				surename, name,mail,encryptPass(password),category);
 
 		int res = sqlRequest.executeUpdate(query);
 		if(res < 0 ) return -999;

@@ -14,7 +14,6 @@ public class MyMenuBar extends MenuBar{
 	CategoryTable catv;
 	AuthorTable autv;
 	StackPane mainPane;
-	Menu viewMenu;
 
 	public MyMenuBar(StackPane mainPane){
 		super();
@@ -23,9 +22,9 @@ public class MyMenuBar extends MenuBar{
 	}
 
 	public void createAffichage(){
-		viewMenu = new Menu("Affichage");
+		Menu viewMenu = new Menu("Afficher");
 
-		MenuItem viewUser = new MenuItem("Utiisateurs");
+		MenuItem viewUser = new MenuItem("Utilsateurs");
 		viewUser.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event){
@@ -55,27 +54,60 @@ public class MyMenuBar extends MenuBar{
 	}
 
 
+	public void createNouveau(){
+		Menu newMenu = new Menu("Nouveau");
+
+		MenuItem newUser = new MenuItem("Utilsateur");
+		newUser.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				UserTable.UpdateUser update = usrv.new UpdateUser();
+			}
+		});
+
+		MenuItem newCat = new MenuItem("Categorie");
+		newCat.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				CategoryTable.UpdateCategory update = catv.new UpdateCategory();
+			}
+		});
+
+		MenuItem newAut = new MenuItem("Auteur");
+		newAut.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				AuthorTable.UpdateAuthor update = autv.new UpdateAuthor();
+			}
+		});
+
+
+		newMenu.getItems().addAll(newUser,newCat,newAut);
+		getMenus().add(newMenu);
+	}
+
 	private void init(){
 		usrv = new UserTable();
 		catv = new CategoryTable();
 		autv = new AuthorTable();
 
 		createAffichage();
+		createNouveau();
 	}
 
 	private void putUserView(){
 		removeChildren();
-		mainPane.getChildren().add(usrv);
+		mainPane.getChildren().add(new UserTable());
 	}
 
 	private void putCatView(){
 		removeChildren();
-		mainPane.getChildren().add(catv);
+		mainPane.getChildren().add(new CategoryTable());
 	}
 
 	private void putAutView(){
 		removeChildren();
-		mainPane.getChildren().add(autv);
+		mainPane.getChildren().add(new AuthorTable());
 	}
 
 	private void removeChildren(){

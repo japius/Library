@@ -53,12 +53,6 @@ public class Main extends Application{
             System.out.println("------");
             e.print();
         }*/
-        library.addUser("Pierre", "MEJANE", "pierre.mejane@student-cs.fr", "pass", 1);
-        library.addUser("Pete", "MEJ", "pete.mej@student-cs.fr", "pass", 1);
-        library.addUser("JM", "MENE", "pierjane@student-cs.fr", "pass", 1);
-        library.addUser("Pieautre", "MEJvdsfeANE", "pierre.mejane@stsfsefsudent-cs.fr", "pass", 1);
-        library.addCategory("Categorie ultime", 50, 20);
-        library.addUser("Pieautre", "MEJvdffsfeANE", "pierre.mejane@stsfmailt-cs.fr", "pass", 3);
         System.exit(0);
     }
 

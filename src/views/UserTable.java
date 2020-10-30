@@ -99,6 +99,11 @@ class UpdateUser extends UpdatePopUp {
   UpdateUser(User user){
     super("Modification utilisateur",user);
   }
+
+  UpdateUser(){
+    super("Creation d'un utilisateur",new User(),true);
+  }
+
   protected void init(User user){
     //init champs
     this.user = user;

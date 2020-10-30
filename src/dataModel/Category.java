@@ -22,6 +22,9 @@ public class Category extends DataTable{
 		}
 	}
 
+
+	public Category(){}
+
 	//Getters
 	public long getId(){return id;}
 	public String getName(){return name;}
@@ -71,9 +74,10 @@ public class Category extends DataTable{
 
 
 	//Ajouter une categorie
-	public static int insertValue(SqlRequest sqlRequest, String name, int borrowing, int time){
+
+	public int insertValue(SqlRequest sqlRequest){
 		String query = String.format("Insert into categorie(nom, nombre_emprunt, duree) values ( '%s', '%d', '%d')",
-				name, borrowing, time);
+			name, borrowing, time);
 
 		int res = sqlRequest.executeUpdate(query);
 		if(res < 0 ) return -999;

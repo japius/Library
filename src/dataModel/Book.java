@@ -116,6 +116,10 @@ public class Book extends DataTable{
 	}
 
 
+	public int insertValue(SqlRequest sqlRequest){
+		return 0;
+	}
+
 	// print de l'utilisateur
 	public void print(){
 

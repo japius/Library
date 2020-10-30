@@ -1,7 +1,7 @@
 import java.sql.*; 
 import java.util.ArrayList;
 
-public class Book implements DataTable{
+public class Book extends DataTable{
 	private long id_book;
 	private long isbn;
 	private String edition;

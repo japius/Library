@@ -1,7 +1,7 @@
 import java.sql.*;  
 import java.util.ArrayList;
 
-public class Author implements DataTable{
+public class Author extends DataTable{
 	private long id;
 	private String firstname;
 	private String lastname;
@@ -76,7 +76,7 @@ public class Author implements DataTable{
 				lastname, firstname, year);
 
 		int res = sqlRequest.executeUpdate(query);
-		if(res < 0 ) return -2;
+		if(res < 0 ) return -999;
 		return res;
 	}
 
@@ -90,7 +90,7 @@ public class Author implements DataTable{
 			lastname, firstname, year, id);
 
 		int res = sqlRequest.executeUpdate(query);
-		if(res < 0 ) return -2;
+		if(res < 0 ) return -999;
 		return res;
 	}
 

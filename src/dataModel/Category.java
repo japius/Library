@@ -1,7 +1,7 @@
 import java.sql.*;  
 import java.util.ArrayList;
 
-public class Category implements DataTable{
+public class Category extends DataTable{
 	private long id;
 	private String name;
 	private int borrowing;
@@ -76,7 +76,7 @@ public class Category implements DataTable{
 				name, borrowing, time);
 
 		int res = sqlRequest.executeUpdate(query);
-		if(res < 0 ) return -2;
+		if(res < 0 ) return -999;
 		return res;
 	}
 
@@ -90,7 +90,7 @@ public class Category implements DataTable{
 			name, time, borrowing, id);
 
 		int res = sqlRequest.executeUpdate(query);
-		if(res < 0 ) return -2;
+		if(res < 0 ) return -999;
 		return res;
 	}
 

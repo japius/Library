@@ -1,18 +1,18 @@
 import java.sql.*;  
 
-public interface DataTable{
+public abstract class DataTable{
 	
 
-	public default String errorInsert(int errorValue){
+	public static String errorInsert(int errorValue){
 		switch(errorValue){
 			case 0 : 
-			return "No error in the insert";
+			return "Aucune erreur.";
 
 			case -1 :
-			return "Value already exists in database";
+			return "Email invalide";
 
 			case -2 :
-			return "Error with database";
+			return "Adresse email deja utilise";
 
 			default :
 			return "Unknown error";
@@ -20,5 +20,5 @@ public interface DataTable{
 		}
 	}
 
-	public int updateValue(SqlRequest sqlRequest);
+	public abstract int updateValue(SqlRequest sqlRequest);
 }

@@ -51,7 +51,6 @@ public class Library{
 	// -2 : le mail est déja utilisé
 	// -3 : autre erreur
 	public int updateData(DataTable data){
-		System.out.println("je rnetre dans updateData");
 		return data.updateValue(mainDatabase);
 	}
 

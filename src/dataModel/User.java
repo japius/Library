@@ -2,7 +2,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.regex.*;
 
-public class User implements DataTable{
+public class User extends DataTable{
 	private long id;
 	private String name;
 	private String surename;
@@ -101,14 +101,13 @@ public class User implements DataTable{
 				surename, name,mail,encryptPass(password),id_category);
 
 		int res = sqlRequest.executeUpdate(query);
-		if(res < 0 ) return -2;
+		if(res < 0 ) return -999;
 		return res;
 	}
 
 
 	//Modifier un utilisateur
 	public int updateValue(SqlRequest sqlRequest){
-		System.out.println("J'update User");
 		if(!isEmailAdress(mail)) return -1;
 
 		String query = String.format("UPDATE utilisateur SET prenom = '%s', nom = '%s', mail = '%s', password = '%s', id_categorie = %d where id_utilisateur = %d",
@@ -117,8 +116,7 @@ public class User implements DataTable{
 		System.out.println(query);
 
 		int res = sqlRequest.executeUpdate(query);
-		System.out.println("res query"+res);
-		if(res < 0 ) return -3;
+		if(res < 0 ) return -2;
 		return res;
 	}
 
@@ -141,7 +139,7 @@ public class User implements DataTable{
 		if(User.getUserByMail(email,sqlRequest) != null)
 			return -2;
 		}catch(SQLException e){
-			return -3;
+			return -999;
 		}
 
 		return 0;

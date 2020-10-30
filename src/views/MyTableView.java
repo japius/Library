@@ -82,14 +82,19 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
 
 		protected void validate(){
 		    String error = changeItem();
-		    if(error == null){
-		    	int i = Main.library.updateData(getItem());
-		    	//refill();
-		    	refresh();
-		    	close();
-		    }else{
+		    if(error != null){
 		    	errorLabel.setText(error);
+		    	return;
 		    }
+		    int i = Main.library.updateData(getItem());
+		    if(i < 0){
+		    	errorLabel.setText(DataTable.errorInsert(i));
+		    	return;
+		    }
+
+		    refresh();
+		    close();
+
 		}
 
 		protected void close(){
@@ -107,7 +112,7 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
   			}
   			layout.add(validate,1,i);
   			if(close!=null)
-  				layout.add(close,0,i);
+  				layout.add(close,1,i+1);
  			return layout;
 		}
 	}

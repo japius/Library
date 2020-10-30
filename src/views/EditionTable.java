@@ -35,7 +35,7 @@ public class EditionTable extends MyTableView<Edition>{
       = new TableColumn<Edition, Long>("ISBN");
  
       TableColumn<Edition, String> editorCol//
-          = new TableColumn<Edition, String>("Edition");
+          = new TableColumn<Edition, String>("Editeur");
 
       TableColumn<Edition, Integer> yearCol//
         = new TableColumn<Edition, Integer>("Annee de parution");
@@ -111,7 +111,7 @@ public class EditionTable extends MyTableView<Edition>{
     oeuvres.setItems(obsList);
 
     if(newItem) return;
-    
+
     int index = 0;
     for(Oeuvre elem : obsList){
       if(elem.equals(edition.getOeuvre()))

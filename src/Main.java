@@ -3,16 +3,27 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import javafx.scene.input.MouseButton;
+import javafx.geometry.Pos;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
+import javafx.scene.paint.Color;
+import javafx.scene.input.*;
+import javafx.event.EventHandler;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 
 public class Main extends Application{
 
@@ -59,7 +70,7 @@ public class Main extends Application{
 
 	@Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
+        //Stage primaryStage = primaryStage();
         /*Button btn = new Button();
         btn.setText("Say 'Hello World'");
         btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -70,12 +81,18 @@ public class Main extends Application{
             }
         });
         */
-        UserTable table = new UserTable();
+        MyTableView table = new CategoryTable();
+
+        VBox rootAndBar = new VBox();
         StackPane root = new StackPane();
-        root.getChildren().add(table);
+
+        MyMenuBar menubar = new MyMenuBar(root);
+
+        rootAndBar.getChildren().add(menubar);
+        rootAndBar.getChildren().add(root);
 
         primaryStage.setTitle("Bibliotheque de la mort");
-        primaryStage.setScene(new Scene(root, 700, 700));
+        primaryStage.setScene(new Scene(rootAndBar, 700, 700));
         primaryStage.show();
     }
 

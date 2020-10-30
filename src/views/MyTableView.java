@@ -17,6 +17,9 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
+import javafx.scene.paint.Color;
+import javafx.scene.input.*;
+import javafx.event.EventHandler;
 
 
 public abstract class MyTableView<K extends DataTable> extends TableView<K>{
@@ -30,11 +33,15 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
 	public abstract class UpdatePopUp{
 
 		protected Stage popupwindow;
+		protected Label errorLabel;
 		
 		protected UpdatePopUp(String name, K item){
 			popupwindow=new Stage();
         	popupwindow.initModality(Modality.APPLICATION_MODAL);
   			popupwindow.setTitle(name);
+
+  			errorLabel = new Label("");
+  			errorLabel.setTextFill(Color.web("#eb1c1c"));
 
   			init(item);
 
@@ -44,24 +51,46 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
   			Button validate = new Button("Valider");
   			validate.setOnAction(e-> validate());
 
-			GridPane layout = makeGrid(getControls(),getNames(),validate,null);
+			GridPane form = makeGrid(getControls(),getNames(),validate,null);
+
+			VBox layout = new VBox();
+			layout.getChildren().add(errorLabel);
+			layout.getChildren().add(form);
 
 			layout.setAlignment(Pos.CENTER);
-			Scene scene1= new Scene(layout, 300, 250);
-  			popupwindow.setScene(scene1);
+			Scene scene= new Scene(layout, 600, 600);
+
+			scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+        		public void handle(KeyEvent ke) {
+        		    if (ke.getCode() == KeyCode.ENTER) {
+        		        validate();
+        		    }
+        		}
+  			});
+
+  			popupwindow.setScene(scene);
         	popupwindow.showAndWait();
 		}
 
 		protected abstract void init(K item);
 		protected abstract Control[] getControls();
 		protected abstract String[] getNames();
-		protected abstract void validate();
+		protected abstract String changeItem();
+		protected abstract K getItem(); 
 
-		/*protected void validate(K item){
-			Main.library.updateData(item);
-    		refill();
-		    refresh();
-		}*/
+
+		protected void validate(){
+		    String error = changeItem();
+		    if(error == null){
+		    	int i = Main.library.updateData(getItem());
+		    	//refill();
+		    	refresh();
+		    	close();
+		    }else{
+		    	errorLabel.setText(error);
+		    }
+		}
 
 		protected void close(){
 			popupwindow.close();

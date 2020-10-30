@@ -28,6 +28,13 @@ public class Category implements DataTable{
 	public int getBorrowing(){return borrowing;}
 	public int getTime(){return time;}
 
+	//Setters
+	public void setCategory(String name, int time, int borrowing){
+		this.name = name;
+		this.time = time;
+		this.borrowing = borrowing;
+	}
+
 
 	//Récupération de la liste complete des categories
 

@@ -133,18 +133,18 @@ class UpdateUser extends UpdatePopUp {
     return names;
   }
 
-  protected void changeItem(){
+  protected String changeItem(){
     Category tmp = (Category) categories.getSelectionModel().getSelectedItem();
+    String mail = email.getText();
+    if(!User.isEmailAdress(mail)){
+      return "L'adresse email n'a pas un format valide.";
+    }
     user.setUser(firstName.getText(),lastName.getText(),email.getText(),tmp.getId());
+    return null;
   }
 
-  protected void validate(){
-    changeItem();
-    int i = Main.library.updateData(user);
-    System.out.println("Valeur de retour "+i);
-    refill();
-    refresh();
-    close();
+  protected User getItem(){
+    return user;
   }
 
 }

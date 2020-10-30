@@ -155,13 +155,8 @@ public class User extends DataTable{
 	}
 
 
-	// print de l'utilisateur
-	public void print(){
-		System.out.println("id = "+id);
-		System.out.println("name = "+name);
-		System.out.println("surename = "+surename);
-		System.out.println("email = "+mail);
-		System.out.println("Category = "+category);
+	public String toString(){
+		return String.format("%d - %s %s",id,surename,name);
 	}
 }
 

@@ -36,7 +36,7 @@ public class Library{
 		if(!user.comparePass(password))
 			return false;
 		connectedUser = user;
-		if(connectedUser.getIdCategorie() == 1) // Possiblement a changer XXX
+		if(connectedUser.getCategory() == 1) // Possiblement a changer XXX
 			admin=true;
 		return true;
 	}
@@ -46,16 +46,25 @@ public class Library{
 		admin=false;
 	}
 
-	// Utilisateurs 
-	public ArrayList<User> getUsers(){
-		return User.getListUsers(mainDatabase);
+
+	// -1 : adresse mail invalide
+	// -2 : le mail est déja utilisé
+	// -3 : autre erreur
+	public int updateData(DataTable data){
+		System.out.println("je rnetre dans updateData");
+		return data.updateValue(mainDatabase);
 	}
 
-	// -1 : le mail est déja utilisé
-	// -2 : other error
+
+	// Utilisateurs 
+	public ArrayList<User> getUsers(){
+		return User.getListUser(mainDatabase);
+	}
+
+	// -1 : adresse mail invalide
+	// -2 : le mail est déja utilisé
+	// -3 : autre erreur
 	public int addUser(String name, String surename, String mail, String password,long id_category) throws SQLException{
-		if(User.getUserByMail(mail,mainDatabase) != null)
-			return -1;
 
 		int tmp = User.insertValue(mainDatabase, name, surename, mail, password, id_category);
 		if(tmp <0)
@@ -64,6 +73,15 @@ public class Library{
 	}
 
 
+	// Categories
+	public ArrayList<Category> getCategories(){
+		return Category.getListCategory(mainDatabase);
+	}
 
+	// -2 : other error
+	public int addCategory(String name, int borrowing, int time) throws SQLException{
+		int tmp = Category.insertValue(mainDatabase, name, borrowing, time);
+		return tmp;
+	}
 
 }

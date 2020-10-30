@@ -1,5 +1,6 @@
 import java.sql.*;  
 import java.util.ArrayList;
+import java.util.regex.*;
 
 public class User implements DataTable{
 	private long id;
@@ -7,7 +8,7 @@ public class User implements DataTable{
 	private String surename;
 	private String mail;
 	private String password;
-	private long id_category;
+	private long category;
 
 	private static final String basicSelect = "Select * from utilisateur";
 
@@ -18,7 +19,7 @@ public class User implements DataTable{
 			surename = rs.getString("nom");
 			mail=rs.getString("mail");
 			password = rs.getString("password");
-			id_category = rs.getInt("id_categorie");
+			category = rs.getInt("id_categorie");
 		}catch(SQLException e ){
 			e.printStackTrace();
 			// XXX a revoir
@@ -28,22 +29,29 @@ public class User implements DataTable{
 	//Getters
 
 	public long getId(){return id;}
-
 	public String getName(){return name;}
 	public String getSurename(){return surename;}
 	public String getMail(){return mail;}
-	public long getIdCategorie(){return id_category;}
+	public long getCategory(){return category;}
+
+
+	//Setters
+	public void setUser(String name, String surename,String mail, long category){
+		this.name=name;
+		this.surename=surename;
+		this.mail=mail;
+		this.category=category;
+	}
 
 
 	//Récupération de la liste complete des utilisateurs
 
-	public static ArrayList<User> getListUsers(SqlRequest sqlRequest){
+	public static ArrayList<User> getListUser(SqlRequest sqlRequest){
 		ArrayList<User> res = new ArrayList<User>();
 		String query = basicSelect;
 		try{
 			ResultSet rs = sqlRequest.executeQuery(query);
 			while(rs.next()){
-				System.out.println("Ajout User");
 				res.add(new User(rs));
 			}
 		}catch(SQLException e){
@@ -56,13 +64,7 @@ public class User implements DataTable{
 	
 	//Recupération d'un utilisateur
 
-	public static User getUserByMail(String mail, SqlRequest sqlRequest)throws SQLException{
-		ResultSet rs = getByMail(mail,sqlRequest);
-		if(!rs.next())
-			return null;
-		return new User(rs);
-	}
-
+	//Via ID
 	public static User getUserById(long id, SqlRequest sqlRequest)throws SQLException{
 		ResultSet rs = getById(id,sqlRequest);
 		rs.next();
@@ -74,15 +76,29 @@ public class User implements DataTable{
 		return sqlRequest.executeQuery(query);
 	}
 
+	//Via Mail
+	public static User getUserByMail(String mail, SqlRequest sqlRequest)throws SQLException{
+		ResultSet rs = getByMail(mail,sqlRequest);
+		if(!rs.next())
+			return null;
+		return new User(rs);
+	}
+
+
 	private static ResultSet getByMail(String mail,SqlRequest sqlRequest){
 		String query = String.format(basicSelect+" where mail ='%s'",mail);
 		return sqlRequest.executeQuery(query);
 	}
 
+
+
 	//Ajouter un utilisateur
 	public static int insertValue(SqlRequest sqlRequest, String name, String surename, String mail, String password, long id_category){
+		int tmp = isValideMail(sqlRequest, mail);
+		if(tmp<0) return tmp;
+
 		String query = String.format("Insert into utilisateur(nom, prenom, mail, password, id_categorie) values ( '%s', '%s','%s','%s', '%d')",
-				name, surename,mail,encryptPass(password),id_category);
+				surename, name,mail,encryptPass(password),id_category);
 
 		int res = sqlRequest.executeUpdate(query);
 		if(res < 0 ) return -2;
@@ -92,16 +108,21 @@ public class User implements DataTable{
 
 	//Modifier un utilisateur
 	public int updateValue(SqlRequest sqlRequest){
-		if(id <= 0)
-			return -1;
+		System.out.println("J'update User");
+		if(!isEmailAdress(mail)) return -1;
 
-		String query = String.format("UPDATE utilisateur SET prenom = '%s', nom = '%s', mail = '%s', password = '%s', id_categorie = %d",
-			name, surename,mail,password,id_category);
+		String query = String.format("UPDATE utilisateur SET prenom = '%s', nom = '%s', mail = '%s', password = '%s', id_categorie = %d where id_utilisateur = %d",
+			name, surename,mail,password,category,id);
+
+		System.out.println(query);
 
 		int res = sqlRequest.executeUpdate(query);
-		if(res < 0 ) return -2;
+		System.out.println("res query"+res);
+		if(res < 0 ) return -3;
 		return res;
 	}
+
+
 
 	// Fonction sur le mot de passe
 	private static String encryptPass(String str){
@@ -113,6 +134,26 @@ public class User implements DataTable{
 	}
 
 
+	public static int isValideMail(SqlRequest sqlRequest, String email){
+		if(!isEmailAdress(email))
+			return -1;
+		try{
+		if(User.getUserByMail(email,sqlRequest) != null)
+			return -2;
+		}catch(SQLException e){
+			return -3;
+		}
+
+		return 0;
+	}
+
+
+	private static boolean isEmailAdress(String email){
+		Pattern p = Pattern.compile( "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$");
+		Matcher m = p.matcher(email.toUpperCase());
+		return m.matches();
+	}
+
 
 	// print de l'utilisateur
 	public void print(){
@@ -120,5 +161,8 @@ public class User implements DataTable{
 		System.out.println("name = "+name);
 		System.out.println("surename = "+surename);
 		System.out.println("email = "+mail);
+		System.out.println("Category = "+category);
 	}
 }
+
+

@@ -16,8 +16,6 @@ create table auteur(
 	prenom varchar(100),
 	annee int
 );
-
-
 create table oeuvre(
 	id_oeuvre serial primary key,
 	titre varchar(100),

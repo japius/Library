@@ -1,10 +1,7 @@
 import java.sql.*;  
 
 public interface DataTable{
-
-	//private ResultSet getById(long id, SqlRequest sqlRequest);
-
-	//public static int insertValue(SqlRequest sqlRequest);
+	
 
 	public default String errorInsert(int errorValue){
 		switch(errorValue){

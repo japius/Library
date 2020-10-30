@@ -9,8 +9,17 @@ public class Book implements DataTable{
 	private String title;
 	private long id_oeuvre;
 	private int year_oeuvre;
+	private int year_author;
+	private String firstname_author;
+	private String lastname_author;
+	private int id_author;
 
-	private static final String basicSelect = "Select oeuvre.id_oeuvre, titre, edition.ISBN as ISBN, oeuvre.annee as oeuvre_annee, editeur, edition.annee as editeur_annee, id_livre from oeuvre, edition, livre where oeuvre.id_oeuvre = edition.id_oeuvre and edition.ISBN = livre.ISBN";
+	private static final String basicSelect = 
+		"Select oeuvre.id_oeuvre, titre, edition.ISBN as ISBN, oeuvre.annee as oeuvre_annee, editeur,"+//
+		" edition.annee as editeur_annee, id_livre, nom, prenom, auteur.annee as auteur_annee,"+//
+		" auteur.id_auteur as id_auteur"+//
+		" from oeuvre, edition, livre "+//
+		" where oeuvre.id_oeuvre = edition.id_oeuvre and edition.ISBN = livre.ISBN and auteur.id_auteur = oeuvre.id_auteur";
 
 
 	private Book(ResultSet rs){
@@ -22,6 +31,10 @@ public class Book implements DataTable{
 			title=rs.getString("titre");
 			id_oeuvre = rs.getInt("id_oeuvre");
 			year_oeuvre = rs.getInt("oeuvre_annee");
+			id_author = rs.getInt("id_auteur");
+			firstname_author = rs.getString("prenom");
+			lastname_author = rs.getString("nom");
+			year_author = rs.getInt("auteur_annee");
 		}catch(SQLException e ){
 			e.printStackTrace();
 			// XXX a revoir
@@ -41,7 +54,6 @@ public class Book implements DataTable{
 		try{
 			ResultSet rs = sqlRequest.executeQuery(query);
 			while(rs.next()){
-				System.out.println("Ajout d'une oeuvre");
 				res.add(new Book(rs));
 			}
 		}catch(SQLException e){

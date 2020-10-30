@@ -17,7 +17,7 @@ import java.security.SecureRandom;
 public class Main extends Application{
 
     static Library library;
-    static boolean noGraphic = true;
+    static boolean noGraphic = false;
 	
 	public static void main(String[] args) throws SQLException{
 		library = new Library();
@@ -42,8 +42,12 @@ public class Main extends Application{
             System.out.println("------");
             e.print();
         }*/
-        System.out.println(library.connect("pierre.mej@gmail.com","mypass"));
-        System.out.println(library.connect("pierre.mej@gmail.com","mpass"));
+        library.addUser("Pierre", "MEJANE", "pierre.mejane@student-cs.fr", "pass", 1);
+        library.addUser("Pete", "MEJ", "pete.mej@student-cs.fr", "pass", 1);
+        library.addUser("JM", "MENE", "pierjane@student-cs.fr", "pass", 1);
+        library.addUser("Pieautre", "MEJvdsfeANE", "pierre.mejane@stsfsefsudent-cs.fr", "pass", 1);
+        library.addCategory("Categorie ultime", 50, 20);
+        library.addUser("Pieautre", "MEJvdffsfeANE", "pierre.mejane@stsfmailt-cs.fr", "pass", 3);
         System.exit(0);
     }
 
@@ -66,8 +70,7 @@ public class Main extends Application{
             }
         });
         */
-        UserView table = new UserView();
-        //table.fillView(User.getAllUsers(mainDatabase));
+        UserTable table = new UserTable();
         StackPane root = new StackPane();
         root.getChildren().add(table);
 

@@ -86,9 +86,14 @@ public class Library{
 
 
 	// Authors
-
 	public ArrayList<Author> getAuthors(){
 		return Author.getListAuthor(mainDatabase);
+	}
+
+	// -2 : other error
+	public int addAuthor(String firstname, String lastname, int year) throws SQLException{
+		int tmp = Author.insertValue(mainDatabase, firstname, lastname, year);
+		return tmp;
 	}
 
 }

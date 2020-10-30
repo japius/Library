@@ -59,7 +59,8 @@ public class Category implements DataTable{
 	//Via ID
 	public static Category getCategoryById(long id, SqlRequest sqlRequest)throws SQLException{
 		ResultSet rs = getById(id,sqlRequest);
-		rs.next();
+		if(!rs.next())
+			return null;
 		return new Category(rs);
 	}
 

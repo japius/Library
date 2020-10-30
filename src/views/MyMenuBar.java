@@ -12,6 +12,7 @@ import javafx.scene.control.MenuItem;
 public class MyMenuBar extends MenuBar{
 	UserTable usrv;
 	CategoryTable catv;
+	AuthorTable autv;
 	StackPane mainPane;
 	Menu viewMenu;
 
@@ -23,9 +24,8 @@ public class MyMenuBar extends MenuBar{
 
 	public void createAffichage(){
 		viewMenu = new Menu("Affichage");
-		MenuItem viewUser = new MenuItem("Utiisateurs");
-		MenuItem viewCat = new MenuItem("Categorie");
 
+		MenuItem viewUser = new MenuItem("Utiisateurs");
 		viewUser.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event){
@@ -33,6 +33,7 @@ public class MyMenuBar extends MenuBar{
 			}
 		});
 
+		MenuItem viewCat = new MenuItem("Categories");
 		viewCat.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event){
@@ -40,8 +41,16 @@ public class MyMenuBar extends MenuBar{
 			}
 		});
 
+		MenuItem viewAut = new MenuItem("Auteurs");
+		viewAut.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				putAutView();
+			}
+		});
 
-		viewMenu.getItems().addAll(viewUser,viewCat);
+
+		viewMenu.getItems().addAll(viewUser,viewCat,viewAut);
 		getMenus().add(viewMenu);
 	}
 
@@ -49,7 +58,8 @@ public class MyMenuBar extends MenuBar{
 	private void init(){
 		usrv = new UserTable();
 		catv = new CategoryTable();
-		//Main.root.addAll(usrv,catv);
+		autv = new AuthorTable();
+
 		createAffichage();
 	}
 
@@ -61,6 +71,11 @@ public class MyMenuBar extends MenuBar{
 	private void putCatView(){
 		removeChildren();
 		mainPane.getChildren().add(catv);
+	}
+
+	private void putAutView(){
+		removeChildren();
+		mainPane.getChildren().add(autv);
 	}
 
 	private void removeChildren(){

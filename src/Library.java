@@ -84,4 +84,11 @@ public class Library{
 		return tmp;
 	}
 
+
+	// Authors
+
+	public ArrayList<Author> getAuthors(){
+		return Author.getListAuthor(mainDatabase);
+	}
+
 }

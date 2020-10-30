@@ -75,7 +75,6 @@ public class Author extends DataTable{
 
 	//Ajouter un auteur
 	public int insertValue(SqlRequest sqlRequest){
-		System.out.println("Je passe dans l'insertValueAut");
 		String query = String.format("Insert into auteur(nom, prenom, annee) values ( '%s', '%s', '%d')",
 			lastname, firstname, year);
 

@@ -13,6 +13,8 @@ public class MyMenuBar extends MenuBar{
 	UserTable usrv;
 	CategoryTable catv;
 	AuthorTable autv;
+	OeuvreTable oeuv;
+	EditionTable ediv;
 	StackPane mainPane;
 
 	public MyMenuBar(StackPane mainPane){
@@ -49,7 +51,24 @@ public class MyMenuBar extends MenuBar{
 		});
 
 
-		viewMenu.getItems().addAll(viewUser,viewCat,viewAut);
+		MenuItem viewOeu = new MenuItem("Oeuvres");
+		viewOeu.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				putOeuView();
+			}
+		});
+
+		MenuItem viewEdi = new MenuItem("Editions");
+		viewEdi.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				putEdiView();
+			}
+		});
+
+
+		viewMenu.getItems().addAll(viewUser,viewCat,viewAut,viewOeu, viewEdi);
 		getMenus().add(viewMenu);
 	}
 
@@ -81,8 +100,24 @@ public class MyMenuBar extends MenuBar{
 			}
 		});
 
+		MenuItem newOeu = new MenuItem("Oeuvre");
+		newOeu.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				OeuvreTable.UpdateOeuvre update = oeuv.new UpdateOeuvre();
+			}
+		});
 
-		newMenu.getItems().addAll(newUser,newCat,newAut);
+		MenuItem newEdi = new MenuItem("Edition");
+		newEdi.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				EditionTable.UpdateEdition update = ediv.new UpdateEdition();
+			}
+		});
+
+
+		newMenu.getItems().addAll(newUser,newCat,newAut,newOeu,newEdi);
 		getMenus().add(newMenu);
 	}
 
@@ -90,6 +125,8 @@ public class MyMenuBar extends MenuBar{
 		usrv = new UserTable();
 		catv = new CategoryTable();
 		autv = new AuthorTable();
+		oeuv = new OeuvreTable();
+		ediv = new EditionTable();
 
 		createAffichage();
 		createNouveau();
@@ -97,17 +134,27 @@ public class MyMenuBar extends MenuBar{
 
 	private void putUserView(){
 		removeChildren();
-		mainPane.getChildren().add(new UserTable());
+		mainPane.getChildren().add(usrv);
 	}
 
 	private void putCatView(){
 		removeChildren();
-		mainPane.getChildren().add(new CategoryTable());
+		mainPane.getChildren().add(catv);
 	}
 
 	private void putAutView(){
 		removeChildren();
-		mainPane.getChildren().add(new AuthorTable());
+		mainPane.getChildren().add(autv);
+	}
+
+	private void putOeuView(){
+		removeChildren();
+		mainPane.getChildren().add(oeuv);
+	}
+
+	private void putEdiView(){
+		removeChildren();
+		mainPane.getChildren().add(ediv);
 	}
 
 	private void removeChildren(){

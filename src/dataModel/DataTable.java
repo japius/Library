@@ -9,10 +9,17 @@ public abstract class DataTable{
 			return "Aucune erreur.";
 
 			case -1 :
-			return "Email invalide";
+			return "Email invalide.";
 
 			case -2 :
-			return "Adresse email deja utilise";
+			return "Adresse email deja utilise.";
+
+			case -11 : 
+			return "Numero ISBN deja pris.";
+
+
+			case -999 :
+			return "Erreur dans la base de donees.";
 
 			default :
 			return "Unknown error";

@@ -111,7 +111,6 @@ class UpdateUser extends UpdatePopUp {
     lastName = new TextField(user.getSurename());
     email = new TextField(user.getMail());
     categories = new ComboBox();
-    System.out.println(firstName);
   
     ArrayList<Category> listCat = Main.library.getCategories();
     int index = -1;

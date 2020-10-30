@@ -67,28 +67,11 @@ public class Library{
 		return User.getListUser(mainDatabase);
 	}
 
-	/*// -1 : adresse mail invalide
-	// -2 : le mail est déja utilisé
-	// -3 : autre erreur
-	public int addUser(String name, String surename, String mail, String password,long id_category) throws SQLException{
-
-		int tmp = User.insertValue(mainDatabase, name, surename, mail, password, id_category);
-		if(tmp <0)
-			return -2;
-		return tmp;
-	}*/
-
 
 	// Categories
 	public ArrayList<Category> getCategories(){
 		return Category.getListCategory(mainDatabase);
 	}
-
-	// -2 : other error
-	/*public int addCategory(String name, int borrowing, int time) throws SQLException{
-		int tmp = Category.insertValue(mainDatabase, name, borrowing, time);
-		return tmp;
-	}*/
 
 
 	// Authors
@@ -96,10 +79,15 @@ public class Library{
 		return Author.getListAuthor(mainDatabase);
 	}
 
-	/*// -2 : other error
-	public int addAuthor(String firstname, String lastname, int year) throws SQLException{
-		int tmp = Author.insertValue(mainDatabase, firstname, lastname, year);
-		return tmp;
-	}*/
+
+	// Oeuvres
+	public ArrayList<Oeuvre> getOeuvres(){
+		return Oeuvre.getListOeuvre(mainDatabase);
+	}
+
+	// Editions
+	public ArrayList<Edition> getEditions(){
+		return Edition.getListEdition(mainDatabase);
+	}
 
 }

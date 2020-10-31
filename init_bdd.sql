@@ -19,9 +19,7 @@ create table auteur(
 create table oeuvre(
 	id_oeuvre serial primary key,
 	titre varchar(100),
-	annee int,
-	id_auteur bigint unsigned,
-	FOREIGN KEY (id_auteur) REFERENCES auteur(id_auteur)
+	annee int
 );
 
 

@@ -17,9 +17,12 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
-import javafx.scene.paint.Color;
+import javafx.util.*;
+import javafx.scene.control.TableColumn.*;
+import javafx.beans.value.ObservableValue;
+import javafx.event.*;
 import javafx.scene.input.*;
-import javafx.event.EventHandler;
+import javafx.scene.paint.Color;
 
 
 public abstract class MyTableView<K extends DataTable> extends TableView<K>{
@@ -29,6 +32,43 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
 	public abstract void fillView(ArrayList<K> list);
 
 	public abstract void refill();
+
+	protected void actionButton(K item){
+		System.out.println("Ce bouton ne fait rien, pense a ajouter un actionButton");
+	}
+
+	public void fillColumn(TableColumn<K,Void> myCol, String btnText){
+		Callback<TableColumn<K, Void>, TableCell<K, Void>> cellFactory = new Callback<TableColumn<K, Void>, TableCell<K, Void>>() {
+            @Override
+            public TableCell<K, Void> call(final TableColumn<K, Void> param) {
+                final TableCell<K, Void> cell = new TableCell<K, Void>() {
+
+                    private final Button btn = new Button(btnText);
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            K data = getTableView().getItems().get(getIndex());
+
+                        	actionButton(data);
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+
+                };
+                return cell;
+            }
+        };
+         myCol.setCellFactory(cellFactory);
+	}
 
 	public abstract class UpdatePopUp{
 

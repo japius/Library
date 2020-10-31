@@ -28,6 +28,7 @@ import javafx.scene.control.MenuBar;
 public class Main extends Application{
 
     static Library library;
+    static StackPane root;
     static boolean noGraphic = false;
 	
 	public static void main(String[] args) throws SQLException{
@@ -78,7 +79,7 @@ public class Main extends Application{
         MyTableView table = new CategoryTable();
 
         VBox rootAndBar = new VBox();
-        StackPane root = new StackPane();
+        root = new StackPane();
 
         MyMenuBar menubar = new MyMenuBar(root);
 

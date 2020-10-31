@@ -5,8 +5,7 @@ public class Oeuvre extends DataTable{
 	private long id = 0;
 	private String title = null;
 	private int year = 0;
-	private long id_auth = 0;
-	private Author author = null;
+	private ArrayList<Author> authors;
 
 	private static final String basicSelect = "Select * from oeuvre";
 
@@ -15,7 +14,6 @@ public class Oeuvre extends DataTable{
 			id = rs.getInt("id_oeuvre");
 			title = rs.getString("titre");
 			year = rs.getInt("annee");
-			id_auth = rs.getInt("id_auteur");
 
 		}catch(SQLException e ){
 			e.printStackTrace();
@@ -26,32 +24,36 @@ public class Oeuvre extends DataTable{
 	public Oeuvre(){}
 
 	public void initFields(SqlRequest sqlRequest)throws SQLException{
-		author = Author.getAuthorById(id_auth,sqlRequest);
+		authors = Author.getListAuthor(sqlRequest,id);
 	}
 
 	//Getters
 	public long getId(){return id;}
 	public String getTitle(){return title;}
 	public int getYear(){return year;}
-	public String getFirstname(){return author.getFirstname();}
-	public String getLastname(){return author.getLastname();}
-	public int getAuthyear(){return author.getYear();}
-	public Author getAuthor(){return author;}
+
+	public String getAuthors(){
+		if(authors.size() == 0) return "";
+		String res = authors.get(0).toString();
+		for(int i = 1; i<authors.size();i++){
+			res = res+", "+authors.get(i).toString();
+		}
+
+		return res;
+
+	}
 
 	//Setters
-	public void setOeuvre(String title, int year,Author author){
+	public void setOeuvre(String title, int year){
 		this.title = title;
 		this.year = year;
-		this.author = author;
-		this.id_auth = author.getId();
 	}
 
 
 	//Récupération de la liste complete des oeuvres
 
-	public static ArrayList<Oeuvre> getListOeuvre(SqlRequest sqlRequest){
+	private static ArrayList<Oeuvre> getListOeuvre(SqlRequest sqlRequest,String query){
 		ArrayList<Oeuvre> res = new ArrayList<Oeuvre>();
-		String query = basicSelect;
 		try{
 			ResultSet rs = sqlRequest.executeQuery(query);
 			while(rs.next()){
@@ -63,6 +65,14 @@ public class Oeuvre extends DataTable{
 			e.printStackTrace();
 		}
 		return res;
+	}
+
+	public static ArrayList<Oeuvre> getListOeuvre(SqlRequest sqlRequest){
+		return getListOeuvre(sqlRequest,basicSelect);
+	}
+
+	public static ArrayList<Oeuvre> getListOeuvre(SqlRequest sqlRequest, long id_author){
+		return getListOeuvre(sqlRequest,basicSelect+ " NATURAL JOIN a_ecrit where id_auteur = "+id_author);
 	}
 
 
@@ -87,8 +97,8 @@ public class Oeuvre extends DataTable{
 
 	//Ajouter une oeuvre
 	public int insertValue(SqlRequest sqlRequest){
-		String query = String.format("Insert into oeuvre(titre, annee, id_auteur) values ( '%s', '%d', '%d')",
-			title, year, id_auth);
+		String query = String.format("Insert into oeuvre(titre, annee) values ( '%s', '%d')",
+			title, year);
 
 		int res = sqlRequest.executeUpdate(query);
 		if(res < 0 ) return -999;
@@ -101,8 +111,8 @@ public class Oeuvre extends DataTable{
 		if(id <= 0)
 			return -1;
 
-		String query = String.format("UPDATE oeuvre SET titre = '%s', annee = '%d', id_auteur = '%d' where id_oeuvre = %d",
-			title, year,id_auth, id);
+		String query = String.format("UPDATE oeuvre SET titre = '%s', annee = '%d' where id_oeuvre = %d",
+			title, year, id);
 
 		int res = sqlRequest.executeUpdate(query);
 		if(res < 0 ) return -999;
@@ -111,7 +121,7 @@ public class Oeuvre extends DataTable{
 
 
 	public String toString(){
-		return String.format("%s (%d)",title,year);
+		return String.format("%s",title,year);
 	}
 
 	public boolean equals(Oeuvre item){

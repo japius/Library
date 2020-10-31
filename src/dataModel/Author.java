@@ -41,9 +41,8 @@ public class Author extends DataTable{
 
 	//Récupération de la liste complete des auteurs
 
-	public static ArrayList<Author> getListAuthor(SqlRequest sqlRequest){
+	private static ArrayList<Author> getListAuthor(SqlRequest sqlRequest,String query){
 		ArrayList<Author> res = new ArrayList<Author>();
-		String query = basicSelect;
 		try{
 			ResultSet rs = sqlRequest.executeQuery(query);
 			while(rs.next()){
@@ -53,6 +52,14 @@ public class Author extends DataTable{
 			e.printStackTrace();
 		}
 		return res;
+	}
+
+	public static ArrayList<Author> getListAuthor(SqlRequest sqlRequest){
+		return getListAuthor(sqlRequest,basicSelect);
+	}
+
+	public static ArrayList<Author> getListAuthor(SqlRequest sqlRequest, long id_oeuvre){
+		return getListAuthor(sqlRequest, basicSelect + " NATURAL JOIN a_ecrit where id_oeuvre = "+id_oeuvre);
 	}
 
 

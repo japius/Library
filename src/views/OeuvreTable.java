@@ -28,6 +28,12 @@ public class OeuvreTable extends MyTableView<Oeuvre>{
     refill();
 	}
 
+  public OeuvreTable(ArrayList<Oeuvre> oeuvres){
+    super();
+    init();
+    fillView(oeuvres);
+  }
+
 
   // Oeuvre
  public void init(){
@@ -38,16 +44,16 @@ public class OeuvreTable extends MyTableView<Oeuvre>{
           = new TableColumn<Oeuvre, String>("Titre");
 
       TableColumn<Oeuvre, Integer> yearCol//
-        = new TableColumn<Oeuvre, Integer>("Annee");
+        = new TableColumn<Oeuvre, Integer>("Parution");
 
-      TableColumn<Oeuvre, Author> authorCol//
-        = new TableColumn<Oeuvre, Author>("Auteur");
+      TableColumn<Oeuvre, String> authorCol//
+        = new TableColumn<Oeuvre, String>("Auteur");
   
 
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         yearCol.setCellValueFactory(new PropertyValueFactory<>("year"));
-        authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
+        authorCol.setCellValueFactory(new PropertyValueFactory<>("authors"));
 
         getColumns().addAll(idCol,titleCol,yearCol,authorCol);
   }
@@ -78,7 +84,6 @@ public class OeuvreTable extends MyTableView<Oeuvre>{
   private Oeuvre oeuvre;
   private TextField title;
   private TextField year;
-  private ComboBox authors;
 
    
   UpdateOeuvre(Oeuvre oeuvre){
@@ -94,45 +99,27 @@ public class OeuvreTable extends MyTableView<Oeuvre>{
     this.oeuvre = oeuvre;
     title = new TextField(oeuvre.getTitle());
     year = new TextField(oeuvre.getYear()+"");
-    authors = new ComboBox();
-
-    ArrayList<Author> listAuth = Main.library.getAuthors();
-   
-    ObservableList<Author> obsList = FXCollections.observableArrayList(listAuth);
-    authors.setItems(obsList);
-
-    if(newItem) return ;
-    
-    int index = 0;
-    for(Author elem : obsList){
-      if(elem.equals(oeuvre.getAuthor()))
-        break;
-      index++;
-    }
-
-    authors.getSelectionModel().select(index);
 
   }
     
   protected Control[] getControls(){
-    Control con[] = {title,year,authors};
+    Control con[] = {title,year};
     return con;
   }
 
   protected String[] getNames(){
-    String names[] = {"Titre","Date","Auteur"};
+    String names[] = {"Titre","Date"};
     return names;
   }
 
   protected String changeItem(){
-    Author auth = (Author) authors.getSelectionModel().getSelectedItem();
     int myyear = 0;
     try{
       myyear = Integer.parseInt(this.year.getText());
     }catch(NumberFormatException e){
       return "L'annee doit etre un entier.";
     }
-    oeuvre.setOeuvre(title.getText(),myyear,auth);
+    oeuvre.setOeuvre(title.getText(),myyear);
     return null;
   }
 

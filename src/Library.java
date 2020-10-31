@@ -79,10 +79,18 @@ public class Library{
 		return Author.getListAuthor(mainDatabase);
 	}
 
+	public ArrayList<Author> getAuthors(long id_oeuvre){
+		return Author.getListAuthor(mainDatabase,id_oeuvre);
+	}
+
 
 	// Oeuvres
 	public ArrayList<Oeuvre> getOeuvres(){
 		return Oeuvre.getListOeuvre(mainDatabase);
+	}
+
+	public ArrayList<Oeuvre> getOeuvres(long id_author){
+		return Oeuvre.getListOeuvre(mainDatabase,id_author);
 	}
 
 	// Editions

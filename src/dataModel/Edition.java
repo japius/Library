@@ -35,7 +35,7 @@ public class Edition extends DataTable{
 	public int getYear(){return year;}
 	public Oeuvre getOeuvre(){return oeuvre;}
 	public long getIdoeuvre(){return id_oeuvre;}
-	public Author getAuthor(){return oeuvre.getAuthor();}
+	public String getAuthors(){return oeuvre.getAuthors();}
 
 	//Setters
 	public void setEdition(long isbn,String editor, int year, Oeuvre oeuvre){

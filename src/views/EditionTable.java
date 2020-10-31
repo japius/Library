@@ -41,17 +41,17 @@ public class EditionTable extends MyTableView<Edition>{
         = new TableColumn<Edition, Integer>("Annee de parution");
 
       TableColumn<Edition, Oeuvre> oeuvreCol//
-        = new TableColumn<Edition, Oeuvre>("Oeuvre");
+        = new TableColumn<Edition, Oeuvre>("Titres");
 
       TableColumn<Edition, Author> authorCol//
-        = new TableColumn<Edition, Author>("Auteur");
+        = new TableColumn<Edition, Author>("Auteur(s)");
   
 
         idCol.setCellValueFactory(new PropertyValueFactory<>("isbn"));
         editorCol.setCellValueFactory(new PropertyValueFactory<>("editor"));
         yearCol.setCellValueFactory(new PropertyValueFactory<>("year"));
         oeuvreCol.setCellValueFactory(new PropertyValueFactory<>("oeuvre"));
-        authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
+        authorCol.setCellValueFactory(new PropertyValueFactory<>("authors"));
 
         getColumns().addAll(idCol,editorCol,yearCol,authorCol,oeuvreCol);
   }
@@ -128,7 +128,7 @@ public class EditionTable extends MyTableView<Edition>{
   }
 
   protected String[] getNames(){
-    String names[] = {"ISBN","Date de parution","Edition","Oeuvre"};
+    String names[] = {"ISBN","Date de parution","Edition","Titre"};
     return names;
   }
 

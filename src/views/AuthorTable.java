@@ -17,6 +17,11 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
+import javafx.util.*;
+import javafx.scene.control.TableColumn.*;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 
 public class AuthorTable extends MyTableView<Author>{
@@ -44,14 +49,24 @@ public class AuthorTable extends MyTableView<Author>{
 
       TableColumn<Author, Integer> yearCol//
         = new TableColumn<Author, Integer>("Anne de naissance");
+
+      TableColumn<Author, Void> oeuvreCol//
+        = new TableColumn<Author, Void>("Bibliographie disponible");
   
 
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         firstnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         lastnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
         yearCol.setCellValueFactory(new PropertyValueFactory<>("year"));
+        fillColumn(oeuvreCol,"Voir");
 
-        getColumns().addAll(idCol,firstnameCol,lastnameCol,yearCol);
+        getColumns().addAll(idCol,firstnameCol,lastnameCol,yearCol,oeuvreCol);
+  }
+
+  protected void actionButton(Author data){
+    OeuvreTable tmp = new OeuvreTable(Main.library.getOeuvres(data.getId()));
+    Main.root.getChildren().clear();
+    Main.root.getChildren().add(tmp);
   }
 
   public void fillView(ArrayList<Author> items){
@@ -71,6 +86,7 @@ public class AuthorTable extends MyTableView<Author>{
     return row;
   });
   }
+
 
   public void refill(){
     fillView(Main.library.getAuthors());

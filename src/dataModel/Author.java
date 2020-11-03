@@ -12,8 +12,8 @@ public class Author extends DataTable{
 	private Author(ResultSet rs){
 		try{
 			id = rs.getInt("id_auteur");
-			firstname = rs.getString("nom");
-			lastname = rs.getString("prenom");
+			firstname = rs.getString("prenom");
+			lastname = rs.getString("nom");
 			year = rs.getInt("annee");
 
 		}catch(SQLException e ){

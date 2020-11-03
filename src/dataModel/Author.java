@@ -33,8 +33,8 @@ public class Author extends DataTable{
 
 	//Setters
 	public void setAuthor(String firstname, String lastname, int year){
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.firstname = firstname.toLowerCase();
+		this.lastname = lastname.toUpperCase();
 		this.year = year;
 	}
 

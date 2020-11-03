@@ -39,9 +39,9 @@ public class User extends DataTable{
 
 	//Setters
 	public void setUser(String name, String surename,String mail, long category){
-		this.name=name;
-		this.surename=surename;
-		this.mail=mail;
+		this.name=name.toLowerCase();
+		this.surename=surename.toUpperCase();
+		this.mail=mail.toLowerCase();
 		this.category=category;
 	}
 
@@ -88,7 +88,7 @@ public class User extends DataTable{
 
 
 	private static ResultSet getByMail(String mail,SqlRequest sqlRequest){
-		String query = String.format(basicSelect+" where mail ='%s'",mail);
+		String query = String.format(basicSelect+" where mail ='%s'",mail.toLowerCase());
 		return sqlRequest.executeQuery(query);
 	}
 
@@ -114,8 +114,6 @@ public class User extends DataTable{
 
 		String query = String.format("UPDATE utilisateur SET prenom = '%s', nom = '%s', mail = '%s', password = '%s', id_categorie = %d where id_utilisateur = %d",
 			name, surename,mail,password,category,id);
-
-		System.out.println(query);
 
 		int res = sqlRequest.executeUpdate(query);
 		if(res < 0 ) return -2;

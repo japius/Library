@@ -17,6 +17,9 @@ public abstract class DataTable{
 			case -11 : 
 			return "Numero ISBN deja pris.";
 
+			case -21 :
+			return "La quantite de livre a ajouter doit etre supérieur a 1.";
+
 
 			case -999 :
 			return "Erreur dans la base de donees.";

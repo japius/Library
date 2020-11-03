@@ -127,7 +127,6 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
 
 
 		protected void validate(){
-			System.out.println("Voici newItem "+newItem);
 		    String error = changeItem();
 		    if(error != null){
 		    	errorLabel.setText(error);
@@ -158,8 +157,6 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
 			GridPane layout= new GridPane();
 			int i;
   			for(i = 0; i<inputs.length;i++){
-  				System.out.println(names[i]);
-  				System.out.println(inputs[i]);
   				layout.add(new Label(names[i]+": "),0,i);
   				layout.add(inputs[i],1,i);
   			}

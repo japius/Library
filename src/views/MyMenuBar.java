@@ -15,6 +15,7 @@ public class MyMenuBar extends MenuBar{
 	AuthorTable autv;
 	OeuvreTable oeuv;
 	EditionTable ediv;
+	BookTable bokv;
 	StackPane mainPane;
 
 	public MyMenuBar(StackPane mainPane){
@@ -67,8 +68,16 @@ public class MyMenuBar extends MenuBar{
 			}
 		});
 
+		MenuItem viewBok = new MenuItem("Livres");
+		viewBok.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				putBokView();
+			}
+		});
 
-		viewMenu.getItems().addAll(viewUser,viewCat,viewAut,viewOeu, viewEdi);
+
+		viewMenu.getItems().addAll(viewUser,viewCat,viewAut,viewOeu, viewEdi,viewBok);
 		getMenus().add(viewMenu);
 	}
 
@@ -116,8 +125,15 @@ public class MyMenuBar extends MenuBar{
 			}
 		});
 
+		MenuItem newBok = new MenuItem("Livre");
+		newBok.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				BookTable.UpdateBook update = bokv.new UpdateBook();
+			}
+		});
 
-		newMenu.getItems().addAll(newUser,newCat,newAut,newOeu,newEdi);
+		newMenu.getItems().addAll(newUser,newCat,newAut,newOeu,newEdi, newBok);
 		getMenus().add(newMenu);
 	}
 
@@ -127,6 +143,7 @@ public class MyMenuBar extends MenuBar{
 		autv = new AuthorTable();
 		oeuv = new OeuvreTable();
 		ediv = new EditionTable();
+		bokv = new BookTable();
 
 		createAffichage();
 		createNouveau();
@@ -155,6 +172,11 @@ public class MyMenuBar extends MenuBar{
 	private void putEdiView(){
 		removeChildren();
 		mainPane.getChildren().add(ediv);
+	}
+
+	private void putBokView(){
+		removeChildren();
+		mainPane.getChildren().add(bokv);
 	}
 
 	private void removeChildren(){

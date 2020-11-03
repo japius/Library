@@ -144,6 +144,8 @@ public class EditionTable extends MyTableView<Edition>{
 
     try{
       myisbn = Integer.parseInt(this.isbn.getText());
+      if(myisbn < 0)
+        return "Le numero ISBN doit etre un entier positif.";
     }catch(NumberFormatException e){
       return "Le numero ISBN doit etre un entier positif.";
     }

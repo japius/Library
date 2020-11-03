@@ -123,7 +123,7 @@ public class Edition extends DataTable{
 
 
 	public String toString(){
-		return String.format("%s %d",editor,year);
+		return String.format("%s, %s, %s",editor, oeuvre.toString(), getAuthors());
 	}
 
 	public boolean equals(Edition item){

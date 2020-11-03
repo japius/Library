@@ -84,6 +84,5 @@ public class SqlRequest{
 
 	public void finalize(){
 		close();
-		System.out.println("J'ai appelé finalize");
 	}
 }  

@@ -98,4 +98,10 @@ public class Library{
 		return Edition.getListEdition(mainDatabase);
 	}
 
+	// Books
+
+	public ArrayList<Book> getBooks(){
+		return Book.getListBook(mainDatabase);
+	}
+
 }

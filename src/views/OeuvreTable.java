@@ -20,6 +20,7 @@ import javafx.stage.*;
 
 
 public class OeuvreTable extends MyTableView<Oeuvre>{
+  private long id_author = -1;
 
 
 	public OeuvreTable(){
@@ -28,10 +29,11 @@ public class OeuvreTable extends MyTableView<Oeuvre>{
     refill();
 	}
 
-  public OeuvreTable(ArrayList<Oeuvre> oeuvres){
+  public OeuvreTable(long id_author){
     super();
     init();
-    fillView(oeuvres);
+    this.id_author = id_author;
+    refill();
   }
 
 
@@ -66,7 +68,7 @@ public class OeuvreTable extends MyTableView<Oeuvre>{
     TableRow<Oeuvre> row = new TableRow<>();
     row.setOnMouseClicked(event -> {
         if (! row.isEmpty() && event.getButton()==MouseButton.PRIMARY 
-             && event.getClickCount() == 2) {
+             && event.getClickCount() == 2 && Main.library.isAdmin()) {
 
             Oeuvre selectedItem = row.getItem();
             new UpdateOeuvre(selectedItem);
@@ -77,7 +79,10 @@ public class OeuvreTable extends MyTableView<Oeuvre>{
   }
 
   public void refill(){
-    fillView(Main.library.getOeuvres());
+    if(id_author<0)
+      fillView(Main.library.getOeuvres());
+    else
+      fillView(Main.library.getOeuvres(id_author));
   }
 
   class UpdateOeuvre extends UpdatePopUp {

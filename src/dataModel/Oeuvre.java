@@ -108,9 +108,6 @@ public class Oeuvre extends DataTable{
 
 	//Modifier une oeuvre
 	public int updateValue(SqlRequest sqlRequest){
-		if(id <= 0)
-			return -1;
-
 		String query = String.format("UPDATE oeuvre SET titre = '%s', annee = '%d' where id_oeuvre = %d",
 			title, year, id);
 
@@ -118,6 +115,34 @@ public class Oeuvre extends DataTable{
 		if(res < 0 ) return -999;
 		return res;
 	}
+
+
+	public static int addAuthor(SqlRequest sqlRequest, long id_author, long id_oeuvre){
+		try{
+		Author aut = Author.getAuthorById(id_author,sqlRequest);
+		if(aut == null)
+			return -31;
+
+		Oeuvre oeu = getOeuvreById(id_oeuvre,sqlRequest);
+		if(oeu == null)
+			return -32;
+
+		String query = String.format("Insert into a_ecrit(id_oeuvre, id_auteur) values('%d', '%d'",
+			id_oeuvre, id_author);
+
+		int res = sqlRequest.executeUpdate(query);
+		if(res < 0 ) return -999;
+		return res;
+		}catch(SQLException e){
+			return -999;
+		}
+	}
+
+
+	/*public static int removeAuthor(SqlRequest sqlRequest, long id_author, long id_oeuvre){
+		String query = String.format("Select * from a_ecrit where id_auteur = '%d' and id_oeuvre = '%d'");
+		
+	}*/
 
 
 	public String toString(){

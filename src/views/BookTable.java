@@ -84,7 +84,7 @@ public class BookTable extends MyTableView<Book>{
     TableRow<Book> row = new TableRow<>();
     row.setOnMouseClicked(event -> {
         if (! row.isEmpty() && event.getButton()==MouseButton.PRIMARY 
-             && event.getClickCount() == 2) {
+             && event.getClickCount() == 2 && Main.library.isAdmin()) {
 
             Book selectedItem = row.getItem();
             new UpdateBook(selectedItem);

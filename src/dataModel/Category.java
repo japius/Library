@@ -100,7 +100,7 @@ public class Category extends DataTable{
 
 
 	public String toString(){
-		return String.format("%d - %s ( duree : %d, nombre emprunt : %d)",id,name,time,borrowing);
+		return String.format("%d - %s",id,name);
 	}
 
 	public boolean equals(Category cat){

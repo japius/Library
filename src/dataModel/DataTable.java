@@ -20,6 +20,12 @@ public abstract class DataTable{
 			case -21 :
 			return "La quantite de livre a ajouter doit etre supérieur a 1.";
 
+			case -31 :
+			return "L'auteur en question n'existe pas dans la base de données.";
+
+			case -32 :
+			return "L'oeuvre en question n'existe pas dans la base de données.";
+
 
 			case -999 :
 			return "Erreur dans la base de donees.";

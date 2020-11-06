@@ -1,6 +1,7 @@
 import java.sql.*; 
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -28,7 +29,7 @@ import javafx.scene.control.MenuBar;
 public class Main extends Application{
 
     static Library library;
-    static StackPane root;
+    static MyMenuBar menubar;
     static boolean noGraphic = false;
 	
 	public static void main(String[] args) throws SQLException{
@@ -43,17 +44,8 @@ public class Main extends Application{
 
 
     public static void noGraphicVersion(String[] args) throws SQLException{
-        /*ArrayList<User> users = User.getAllUsers(mainDatabase);
-        for(User e : users){
-            System.out.println("------");
-            e.print();
-        }
-        System.out.println("-------------");
-        ArrayList<Book> books = Book.getAllBooks(mainDatabase);
-        for(Book e : books){
-            System.out.println("------");
-            e.print();
-        }*/
+        Date d = new Date();
+        System.out.println(d);
         System.exit(0);
     }
 
@@ -78,13 +70,13 @@ public class Main extends Application{
         */
         MyTableView table = new CategoryTable();
 
-        VBox rootAndBar = new VBox();
-        root = new StackPane();
+        BorderPane rootAndBar = new BorderPane();
+        StackPane root = new StackPane();
 
-        MyMenuBar menubar = new MyMenuBar(root);
+        menubar = new MyMenuBar(root);
 
-        rootAndBar.getChildren().add(menubar);
-        rootAndBar.getChildren().add(root);
+        rootAndBar.setTop(menubar);
+        rootAndBar.setCenter(root);
 
         primaryStage.setTitle("Bibliotheque de la mort");
         primaryStage.setScene(new Scene(rootAndBar, 700, 700));

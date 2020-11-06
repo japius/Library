@@ -64,7 +64,7 @@ public class EditionTable extends MyTableView<Edition>{
     TableRow<Edition> row = new TableRow<>();
     row.setOnMouseClicked(event -> {
         if (! row.isEmpty() && event.getButton()==MouseButton.PRIMARY 
-             && event.getClickCount() == 2) {
+             && event.getClickCount() == 2 && Main.library.isAdmin()) {
 
             Edition selectedItem = row.getItem();
             new UpdateEdition(selectedItem);

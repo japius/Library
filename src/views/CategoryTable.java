@@ -63,7 +63,7 @@ public class CategoryTable extends MyTableView<Category>{
     TableRow<Category> row = new TableRow<>();
     row.setOnMouseClicked(event -> {
         if (! row.isEmpty() && event.getButton()==MouseButton.PRIMARY 
-             && event.getClickCount() == 2) {
+             && event.getClickCount() == 2 && Main.library.isAdmin()) {
 
             Category selectedCat = row.getItem();
             new UpdateCategory(selectedCat);

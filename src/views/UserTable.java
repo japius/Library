@@ -74,7 +74,7 @@ public class UserTable extends MyTableView<User>{
     TableRow<User> row = new TableRow<>();
     row.setOnMouseClicked(event -> {
         if (! row.isEmpty() && event.getButton()==MouseButton.PRIMARY 
-             && event.getClickCount() == 2) {
+             && event.getClickCount() == 2 && Main.library.isAdmin()) {
 
             User selectedUser = row.getItem();
             new UpdateUser(selectedUser);

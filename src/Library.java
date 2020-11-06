@@ -29,19 +29,29 @@ public class Library{
 		return admin;
 	}
 
-	public boolean connect(String mail, String password)throws SQLException{
-		User user = User.getUserByMail(mail, mainDatabase);
-		if(user == null)
-			return false;
-		if(!user.comparePass(password))
-			return false;
-		connectedUser = user;
-		if(connectedUser.getCategory() == 1) // Possiblement a changer XXX
-			admin=true;
-		return true;
+	public User getConnectedUser(){
+		return connectedUser;
 	}
 
-	public void disconnct(){
+	public boolean connect(String mail, String password){
+		System.out.println("Try to connect :"+ mail +" , "+password);
+		try{
+			User user = User.getUserByMail(mail, mainDatabase);
+			if(user == null)
+				return false;
+			if(!user.comparePass(password))
+				return false;
+			connectedUser = user;
+			if(connectedUser.getCategory() == 1) // Possiblement a changer XXX
+				admin=true;
+			return true;
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public void disconnect(){
 		connectedUser = null;
 		admin=false;
 	}
@@ -59,6 +69,11 @@ public class Library{
 	public int insertData(DataTable data){
 		System.out.println("insertData");
 		return data.insertValue(mainDatabase);
+	}
+
+
+	public int addAuthor(long id_author, long id_oeuvre){
+		return Oeuvre.addAuthor(mainDatabase, id_author, id_oeuvre);
 	}
 
 

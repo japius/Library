@@ -79,7 +79,7 @@ create table a_ecrit(
 );
 
 create table est_emprunte(
-	ISBN bigint unsigned,
+	id_livre bigint unsigned,
 	id_utilisateur bigint unsigned,
 	date_emprunt date,
 	PRIMARY KEY (ISBN,id_utilisateur,date_emprunt),

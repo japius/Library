@@ -64,9 +64,8 @@ public class AuthorTable extends MyTableView<Author>{
   }
 
   protected void actionButton(Author data){
-    OeuvreTable tmp = new OeuvreTable(Main.library.getOeuvres(data.getId()));
-    Main.root.getChildren().clear();
-    Main.root.getChildren().add(tmp);
+    OeuvreTable tmp = new OeuvreTable(data.getId());
+    Main.menubar.putTmpView(tmp);
   }
 
   public void fillView(ArrayList<Author> items){
@@ -77,7 +76,7 @@ public class AuthorTable extends MyTableView<Author>{
     TableRow<Author> row = new TableRow<>();
     row.setOnMouseClicked(event -> {
         if (! row.isEmpty() && event.getButton()==MouseButton.PRIMARY 
-             && event.getClickCount() == 2) {
+             && event.getClickCount() == 2 && Main.library.isAdmin()) {
 
             Author selectedItem = row.getItem();
             new UpdateAuthor(selectedItem);

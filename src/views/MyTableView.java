@@ -160,7 +160,8 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
   				layout.add(new Label(names[i]+": "),0,i);
   				layout.add(inputs[i],1,i);
   			}
-  			layout.add(validate,1,i);
+  			if(validate!=null)
+  				layout.add(validate,1,i);
   			if(close!=null)
   				layout.add(close,1,i+1);
  			return layout;

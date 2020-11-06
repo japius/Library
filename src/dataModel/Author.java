@@ -106,7 +106,7 @@ public class Author extends DataTable{
 
 
 	public String toString(){
-		return String.format("%s %s",lastname,firstname,year);
+		return String.format("%s %s",lastname,firstname);
 	}
 
 	public boolean equals(Author item){

@@ -15,6 +15,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.Node;
 
+import java.util.LinkedList;
+
 public class MyMenuBar extends HBox{
 	UserTable usrv;
 	CategoryTable catv;
@@ -22,6 +24,9 @@ public class MyMenuBar extends HBox{
 	OeuvreTable oeuv;
 	EditionTable ediv;
 	BookTable bokv;
+	RedListTable redv;
+
+	LinkedList<MenuItem> adminOnly = new LinkedList<>();
 
 	//ProfileView profileView;
 
@@ -96,8 +101,18 @@ public class MyMenuBar extends HBox{
 			}
 		});
 
+		MenuItem viewRed = new MenuItem("Liste rouge");
+		viewRed.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				putRedView();
+			}
+		});
 
-		viewMenu.getItems().addAll(viewUser,viewCat,viewAut,viewOeu, viewEdi,viewBok);
+		adminOnly.add(viewUser);
+		adminOnly.add(viewCat);
+		adminOnly.add(viewRed);
+		viewMenu.getItems().addAll(viewUser,viewCat,viewAut,viewOeu, viewEdi,viewBok,viewRed);
 		leftBar.getMenus().add(viewMenu);
 	}
 
@@ -113,7 +128,7 @@ public class MyMenuBar extends HBox{
             }
         });
 
-		Label profile = new Label("Profile");
+		Label profile = new Label("Profil");
 		profile.setOnMouseClicked(new EventHandler<MouseEvent>() {
  
             @Override
@@ -197,10 +212,15 @@ public class MyMenuBar extends HBox{
 
 
 	public void maj(){
-		if(Main.library.isAdmin())
+		if(Main.library.isAdmin()){
 			newMenu.setVisible(true);
-		else
+			for(MenuItem e : adminOnly)
+				e.setVisible(true);
+		}else{
 			newMenu.setVisible(false);
+			for(MenuItem e : adminOnly)
+				e.setVisible(false);
+		}
 
 		hideRight();
         if(Main.library.isConnect()){
@@ -219,10 +239,11 @@ public class MyMenuBar extends HBox{
 		oeuv = new OeuvreTable();
 		ediv = new EditionTable();
 		bokv = new BookTable();
+		redv = new RedListTable();
 
 		//profileView = new ProfileView();
 
-		mainPane.getChildren().addAll(usrv,catv,autv,oeuv,ediv,bokv);
+		mainPane.getChildren().addAll(usrv,catv,autv,oeuv,ediv,bokv,redv);
 		hideViews();
 
 		leftBar = new MenuBar();
@@ -262,6 +283,7 @@ public class MyMenuBar extends HBox{
 		oeuv.setVisible(false);
 		ediv.setVisible(false);
 		bokv.setVisible(false);
+		redv.setVisible(false);
 		//profileView.setVisible(false);
 
 	}
@@ -275,31 +297,43 @@ public class MyMenuBar extends HBox{
 	private void putUserView(){
 		hideViews();
 		usrv.setVisible(true);
+		usrv.refill();
 	}
 
 	private void putCatView(){
 		hideViews();
 		catv.setVisible(true);
+		catv.refill();
 	}
 
 	private void putAutView(){
 		hideViews();
 		autv.setVisible(true);
+		autv.refill();
 	}
 
 	private void putOeuView(){
 		hideViews();
 		oeuv.setVisible(true);
+		oeuv.refill();
 	}
 
 	private void putEdiView(){
 		hideViews();
 		ediv.setVisible(true);
+		ediv.refill();
 	}
 
 	private void putBokView(){
 		hideViews();
 		bokv.setVisible(true);
+		bokv.refill();
+	}
+
+	private void putRedView(){
+		hideViews();
+		redv.setVisible(true);
+		redv.refill();
 	}
 
 }

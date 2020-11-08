@@ -18,16 +18,27 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
+import javafx.scene.control.Alert.AlertType; 
 
 
 public class BookTable extends MyTableView<Book>{
-
+  private long id_user = -1;
+  TableColumn<Book, String> borrowCol;
+  TableColumn<Book, Boolean> dispoCol;
+  TableColumn<Book, Void> empruntCol;
 
 	public BookTable(){
 		super();
     init();
     refill();
 	}
+
+  public BookTable(long id_user){
+    super();
+    init();
+    this.id_user=id_user;
+    refill();
+  }
 
 
   // Book
@@ -47,19 +58,30 @@ public class BookTable extends MyTableView<Book>{
       TableColumn<Book, Author> authorCol//
         = new TableColumn<Book, Author>("Auteur(s)");
 
-      TableColumn<Book, String> borrowCol//
-        = new TableColumn<Book, String>("Emrunt");
+      borrowCol = new TableColumn<Book, String>("Emprunt");
 
       TableColumn<Book, User> userCol//
         = new TableColumn<Book, User>("Par");
 
-      TableColumn<Book, Date> beginCol//
-        = new TableColumn<Book, Date>("De");
+      TableColumn<Book, String> beginCol//
+        = new TableColumn<Book, String>("De");
 
-      TableColumn<Book, Date> endCol//
-        = new TableColumn<Book, Date>("A");
+      TableColumn<Book, String> endCol//
+        = new TableColumn<Book, String>("A");
 
-      borrowCol.getColumns().addAll(userCol,beginCol,endCol);
+      dispoCol = new TableColumn<Book, Boolean>("Disponible");
+
+      if(id_user < 0)
+        empruntCol  = new TableColumn<Book, Void>("Emprunter");
+      else 
+        empruntCol  = new TableColumn<Book, Void>("Rendre");
+
+      if(id_user>0)
+        borrowCol.getColumns().addAll(beginCol,endCol);
+      else
+        borrowCol.getColumns().addAll(userCol,beginCol,endCol);
+        
+      fillColumn(empruntCol,"");
 
 
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -70,10 +92,40 @@ public class BookTable extends MyTableView<Book>{
         userCol.setCellValueFactory(new PropertyValueFactory<>("user"));
         beginCol.setCellValueFactory(new PropertyValueFactory<>("begin"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        dispoCol.setCellValueFactory(new PropertyValueFactory<>("dispo"));
 
 
+        getColumns().addAll(idCol,isbnCol,editorCol,oeuvreCol,authorCol,borrowCol,dispoCol,empruntCol);
+        if(id_user>0)
+          userCol.setVisible(false);
+        
+  }
 
-        getColumns().addAll(idCol,isbnCol,editorCol,oeuvreCol,authorCol,borrowCol);
+  protected void actionButton(Book data){
+    int tmp = 0;
+    if (id_user > 0){
+      tmp = Main.library.returnBook(data);
+    }else if(Main.library.isConnect()){
+      tmp = Main.library.borrowBook(data,Main.library.getConnectedUser());
+    }
+    if(tmp<0){
+      Alert a = new Alert(AlertType.WARNING);
+      a.setContentText(DataTable.errorInsert(tmp));
+      a.showAndWait();
+    }
+  }
+
+  protected void executeOnButton(Button but, Book data){
+    if(data.getDispo()){
+      but.setText("Emprunter");
+      but.setVisible(true);
+    }else if(id_user>0){
+      but.setText("Rendre");
+      but.setVisible(true);
+    }else{
+      but.setVisible(false);
+    }
+
   }
 
   public void fillView(ArrayList<Book> items){
@@ -95,7 +147,27 @@ public class BookTable extends MyTableView<Book>{
   }
 
   public void refill(){
-    fillView(Main.library.getBooks());
+    if(id_user > 0){
+      fillView(Main.library.getBooks(id_user));
+      dispoCol.setVisible(false);
+      borrowCol.setVisible(true);
+      empruntCol.setVisible(true);
+    }else if(Main.library.isAdmin()){
+      fillView(Main.library.getBooks());
+      dispoCol.setVisible(true);
+      borrowCol.setVisible(true);
+      empruntCol.setVisible(true);
+    }else if(Main.library.isConnect()){
+      fillView(Main.library.getBooks());
+      dispoCol.setVisible(true);
+      borrowCol.setVisible(false);
+      empruntCol.setVisible(true);
+    }else{
+      fillView(Main.library.getBooks());
+      dispoCol.setVisible(true);
+      borrowCol.setVisible(false);
+      empruntCol.setVisible(false);
+    }
   }
 
   class UpdateBook extends UpdatePopUp {

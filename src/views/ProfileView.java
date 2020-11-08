@@ -62,7 +62,6 @@ public class ProfileView extends GridPane{
 
 		init_emprunt();
 		init_user();
-		init_cat();
 		init_rouge();
 
 		BorderPane tmpUser = new BorderPane();
@@ -82,23 +81,17 @@ public class ProfileView extends GridPane{
 
 
 		add(tmpUser, 0, 0);
-		add(info_cat,0,1);
-		add(info_emprunt, 1, 0);
-		add(hist_rouge, 1,1);
-
+		//add(info_cat,0,1);
+		add(info_emprunt, 0, 1,2,1);
+		add(hist_rouge, 1,0);
 	}
 
 	private void init_emprunt(){
 		info_emprunt.setTop(new Label("Liste des emprunts"));
+		BookTable bookt = new BookTable(user.getId());
+		info_emprunt.setCenter(bookt);
 	}
 
-	private void init_cat(){
-    	info_cat.add(new Label("Nombre d'emprunt autorisee :"),0,0);
-    	info_cat.add(new Label("Duree maximale d'un emprunt :"),0,1);
-    	info_cat.add(text_cat[0],1,0);
-    	info_cat.add(text_cat[1],1,1);
-    	maj_cat();
-	}
 
 	private void maj_cat(){
 		Category selectedCat = (Category) list_cat_visual.getSelectionModel().getSelectedItem();
@@ -109,6 +102,8 @@ public class ProfileView extends GridPane{
 
 	private void init_rouge(){
 		hist_rouge.setTop(new Label("Historique de la liste rouge"));
+		RedListTable redt = new RedListTable(user.getId(),false);
+		hist_rouge.setCenter(redt);
 	}
 
 	private void init_user(){
@@ -141,11 +136,18 @@ public class ProfileView extends GridPane{
     	}
     	list_cat_visual.getSelectionModel().select(i);
 
-
+    	int admin = 3;
     	if(Main.library.isAdmin()){
     		info_user.add(new Label("Categorie :"),0,3);
     		info_user.add(list_cat_visual,1,3);
+    		admin = 4;
     	}
+
+    	info_user.add(new Label("Nombre d'emprunt autorisee :"),0,admin+0);
+    	info_user.add(new Label("Duree maximale d'un emprunt :"),0,admin+1);
+    	info_user.add(text_cat[0],1,admin+0);
+    	info_user.add(text_cat[1],1,admin+1);
+    	maj_cat();
 
 
     	list_cat_visual.setOnAction(new EventHandler<ActionEvent>() {
@@ -171,6 +173,8 @@ public class ProfileView extends GridPane{
             	}
             }
         });
+
+
 	}
 
 }

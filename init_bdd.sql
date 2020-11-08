@@ -33,9 +33,9 @@ create table edition(
 
 create table categorie(
 	id_categorie serial primary key,
-	nom varchar(50),
-	nombre_emprunt int,
-	duree int
+	nom varchar(100) not null,
+	nombre_emprunt int not null,
+	duree int not null
 );
 
 -- remplissage minimal --
@@ -44,18 +44,18 @@ INSERT into categorie(nom,nombre_emprunt,duree) values ("client", 10, 28);
 
 create table utilisateur(
 	id_utilisateur serial primary key,
-	nom varchar(100),
-	prenom varchar(100),
-	mail varchar(320) unique,
-	password varchar(500),
-	id_categorie bigint unsigned,
+	nom varchar(100) not null,
+	prenom varchar(100) not null,
+	mail varchar(320) unique not null,
+	password varchar(500) not null,
+	id_categorie bigint unsigned not null,
 	FOREIGN KEY (id_categorie) REFERENCES categorie(id_categorie)
 );
 
 create table list_rouge(
 	id_utilisateur bigint unsigned,
-	date_debut date ,
-	date_fin date ,
+	date_debut date,
+	date_fin date,
 	PRIMARY KEY (id_utilisateur,date_debut,date_fin),
 	FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur)
 );
@@ -80,9 +80,9 @@ create table a_ecrit(
 
 create table est_emprunte(
 	id_livre bigint unsigned,
-	id_utilisateur bigint unsigned,
-	date_emprunt date,
-	PRIMARY KEY (ISBN,id_utilisateur,date_emprunt),
-	FOREIGN KEY (ISBN) REFERENCES edition(ISBN),
+	id_utilisateur bigint unsigned not null,
+	date_emprunt date not null,
+	PRIMARY KEY (id_livre,id_utilisateur,date_emprunt),
+	FOREIGN KEY (id_livre) REFERENCES livre(id_livre),
 	FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur)
 );

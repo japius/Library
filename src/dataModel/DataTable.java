@@ -1,4 +1,5 @@
 import java.sql.*;  
+import java.util.Date;
 
 public abstract class DataTable{
 	
@@ -26,6 +27,8 @@ public abstract class DataTable{
 			case -32 :
 			return "L'oeuvre en question n'existe pas dans la base de données.";
 
+			case -41 :
+			return "Il y a deja trop d'emprunts.";
 
 			case -999 :
 			return "Erreur dans la base de donees.";
@@ -39,4 +42,10 @@ public abstract class DataTable{
 	public abstract int updateValue(SqlRequest sqlRequest);
 
 	public abstract int insertValue(SqlRequest sqlRequest);
+
+
+	public static  String dateSql(Date date){
+		if(date == null) return "";
+		return String.format("%d-%d-%d",1900+date.getYear(),1+ date.getMonth(),1+ date.getDay());
+	}
 }

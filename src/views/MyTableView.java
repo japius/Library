@@ -37,21 +37,24 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
 		System.out.println("Ce bouton ne fait rien, pense a ajouter un actionButton");
 	}
 
+	protected void executeOnButton(Button but, K item){}
+
 	public void fillColumn(TableColumn<K,Void> myCol, String btnText){
 		Callback<TableColumn<K, Void>, TableCell<K, Void>> cellFactory = new Callback<TableColumn<K, Void>, TableCell<K, Void>>() {
             @Override
             public TableCell<K, Void> call(final TableColumn<K, Void> param) {
                 final TableCell<K, Void> cell = new TableCell<K, Void>() {
 
-                    private final Button btn = new Button(btnText);
+                    private Button btn = new Button(btnText);
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             K data = getTableView().getItems().get(getIndex());
-
                         	actionButton(data);
+                        	refill();
                         });
                     }
+
 
                     @Override
                     public void updateItem(Void item, boolean empty) {
@@ -60,6 +63,7 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
                             setGraphic(null);
                         } else {
                             setGraphic(btn);
+                            executeOnButton(btn, getTableView().getItems().get(getIndex()));
                         }
                     }
 

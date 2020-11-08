@@ -76,6 +76,14 @@ public class Library{
 		return Oeuvre.addAuthor(mainDatabase, id_author, id_oeuvre);
 	}
 
+	public int borrowBook(Book book, User user){
+		return book.borrowBook(mainDatabase,user);
+	}
+
+	public int returnBook(Book book){
+		return book.returnBook(mainDatabase);
+	}
+
 
 	// Utilisateurs 
 	public ArrayList<User> getUsers(){
@@ -117,6 +125,23 @@ public class Library{
 
 	public ArrayList<Book> getBooks(){
 		return Book.getListBook(mainDatabase);
+	}
+
+	public ArrayList<Book> getBooks(long id_user){
+		return Book.getListBook(mainDatabase,id_user);
+	}
+
+	// Liste rouge
+	public ArrayList<RedList> getRedLists(){
+		return RedList.getListRedList(mainDatabase);
+	}
+
+	public ArrayList<RedList> getRedLists(long id_user){
+		return RedList.getListRedList(mainDatabase, id_user);
+	}
+
+	public ArrayList<RedList> getActualRedLists(){
+		return RedList.getActualRedList(mainDatabase);
 	}
 
 }

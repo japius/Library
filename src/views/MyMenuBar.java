@@ -22,31 +22,31 @@ import javafx.scene.text.FontWeight;
 import java.util.LinkedList;
 
 public class MyMenuBar extends HBox{
-	UserTable usrv;
-	CategoryTable catv;
-	AuthorTable autv;
-	OeuvreTable oeuv;
-	EditionTable ediv;
-	BookTable bokv;
-	RedListTable redv;
+	private UserTable usrv;
+	private CategoryTable catv;
+	private AuthorTable autv;
+	private OeuvreTable oeuv;
+	private EditionTable ediv;
+	private BookTable bokv;
+	private RedListTable redv;
 
-	LinkedList<MenuItem> adminOnly = new LinkedList<>();
+	private LinkedList<MenuItem> adminOnly = new LinkedList<>();
 
 	//ProfileView profileView;
 
-	MenuBar leftBar;
+	private MenuBar leftBar;
 
-	MenuBar rightBar;
-	Menu connect;
-	Menu profile;
-	Menu disconnect;
-	Menu inscription;
+	private MenuBar rightBar;
+	private Menu connect;
+	private Menu profile;
+	private Menu disconnect;
+	private Menu inscription;
 
 
-	StackPane mainPane;
-	Node tmpView = null;
+	private StackPane mainPane;
+	private Node tmpView = null;
 
-	Menu newMenu;
+	private Menu newMenu;
 
 	public MyMenuBar(StackPane mainPane){
 		super();

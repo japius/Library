@@ -24,9 +24,9 @@ import javafx.scene.control.Alert.AlertType;
 public class BookTable extends MyTableView<Book>{
   private long id_user = -1;
   private Oeuvre oeuvre = null;
-  TableColumn<Book, String> borrowCol;
-  TableColumn<Book, Boolean> dispoCol;
-  TableColumn<Book, Void> empruntCol;
+  private TableColumn<Book, String> borrowCol;
+  private TableColumn<Book, String> dispoCol;
+  private TableColumn<Book, Void> empruntCol;
 
 	public BookTable(){
 		super();
@@ -77,7 +77,7 @@ public class BookTable extends MyTableView<Book>{
       TableColumn<Book, String> endCol//
         = new TableColumn<Book, String>("A");
 
-      dispoCol = new TableColumn<Book, Boolean>("Disponible");
+      dispoCol = new TableColumn<Book, String>("Disponible");
 
       if(id_user < 0)
         empruntCol  = new TableColumn<Book, Void>("Emprunter");
@@ -100,7 +100,7 @@ public class BookTable extends MyTableView<Book>{
         userCol.setCellValueFactory(new PropertyValueFactory<>("user"));
         beginCol.setCellValueFactory(new PropertyValueFactory<>("begin"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
-        dispoCol.setCellValueFactory(new PropertyValueFactory<>("dispo"));
+        dispoCol.setCellValueFactory(new PropertyValueFactory<>("dispostring"));
 
 
         getColumns().addAll(idCol,isbnCol,editorCol,oeuvreCol,authorCol,borrowCol,dispoCol,empruntCol);

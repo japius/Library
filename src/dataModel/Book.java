@@ -53,6 +53,7 @@ public class Book extends DataTable{
 	public String getBegin(){return dateSql(begin_date);}
 	public String getEnd(){return dateSql(end_date);}
 	public boolean getDispo(){return user==null;}
+	public String getDispostring(){return getDispo() ? "O" : "X";}
 
 	//Setters
 	public void setBook(Edition edition, User user, Date begin_date, Date end_date,int quantity){

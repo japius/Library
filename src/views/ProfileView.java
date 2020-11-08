@@ -122,6 +122,7 @@ public class ProfileView extends GridPane{
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void init_user(){
 
 		info_user.setAlignment(Pos.CENTER);

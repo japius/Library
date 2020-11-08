@@ -40,6 +40,7 @@ public class RedListTable extends MyTableView<RedList>{
 
 
   // RedList
+  @SuppressWarnings("unchecked")
  public void init(){
  
       TableColumn<RedList, String> userCol//

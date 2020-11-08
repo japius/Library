@@ -29,6 +29,7 @@ public class UserTable extends MyTableView<User>{
 
 
   // Utilisateurs
+  @SuppressWarnings("unchecked")
   public void init(){
         TableColumn<User, Integer> idCol //
             = new TableColumn<User, Integer>("Id");
@@ -105,6 +106,7 @@ class UpdateUser extends UpdatePopUp {
     super("Creation d'un utilisateur",new User(),true);
   }
 
+  @SuppressWarnings("unchecked")
   protected void init(User user){
     //init champs
     this.user = user;

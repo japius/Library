@@ -15,6 +15,8 @@ JDBC = mysql_con_java.jar
 
 MAIN = Main
 
+FLAG = -Xlint:deprecation
+
 
 
 
@@ -24,7 +26,7 @@ clean :
 	rm $(CLASS)/*
 
 compile : 
-	$(CC) -d $(CLASS) -cp $(JDBC) $(SRCFILE)
+	$(CC) $(FLAG) -d $(CLASS) -cp $(JDBC) $(SRCFILE)
 
 run :
 	$(EXEC) -cp "$(CLASS);$(LIB)/$(JDBC)" $(MAIN)

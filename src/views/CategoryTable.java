@@ -30,6 +30,7 @@ public class CategoryTable extends MyTableView<Category>{
 
 
   // Category
+  @SuppressWarnings("unchecked")
  public void init(){
     TableColumn<Category, Integer> idCol //
       = new TableColumn<Category, Integer>("Id");

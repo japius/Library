@@ -42,6 +42,7 @@ public class AuthorTable extends MyTableView<Author>{
 
 
   // Author
+  @SuppressWarnings("unchecked")
  public void init(){
     TableColumn<Author, Integer> idCol //
       = new TableColumn<Author, Integer>("Id");

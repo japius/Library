@@ -38,6 +38,7 @@ public class OeuvreTable extends MyTableView<Oeuvre>{
 
 
   // Oeuvre
+  @SuppressWarnings("unchecked")
  public void init(){
     TableColumn<Oeuvre, Long> idCol //
       = new TableColumn<Oeuvre, Long>("Id");

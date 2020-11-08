@@ -47,6 +47,7 @@ public abstract class DataTable{
 	public abstract int insertValue(SqlRequest sqlRequest);
 
 
+	@SuppressWarnings("deprecation")
 	public static  String dateSql(Date date){
 		if(date == null) return "";
 		return String.format("%d-%d-%d",1900+date.getYear(),1+ date.getMonth(),date.getDate());

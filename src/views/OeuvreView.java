@@ -79,7 +79,7 @@ public class OeuvreView extends GridPane{
 		info_book.setCenter(bookt);
 	}
 
-
+	@SuppressWarnings("unchecked")
 	private void init_author(){
 		HBox box = new HBox();
 		Region spacer = new Region();

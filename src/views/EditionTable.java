@@ -30,6 +30,7 @@ public class EditionTable extends MyTableView<Edition>{
 
 
   // Edition
+  @SuppressWarnings("unchecked")
  public void init(){
     TableColumn<Edition, Long> idCol //
       = new TableColumn<Edition, Long>("ISBN");
@@ -94,6 +95,7 @@ public class EditionTable extends MyTableView<Edition>{
     super("Creation d'une edition",new Edition(),true);
   }
 
+  @SuppressWarnings("unchecked")
   protected void init(Edition edition){
     //init champs
     this.edition = edition;

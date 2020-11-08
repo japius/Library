@@ -50,6 +50,7 @@ public class BookTable extends MyTableView<Book>{
 
 
   // Book
+  @SuppressWarnings("unchecked")
  public void init(){
     TableColumn<Book, Long> idCol //
       = new TableColumn<Book, Long>("Id");
@@ -204,6 +205,7 @@ public class BookTable extends MyTableView<Book>{
     super("Creation d'un livre",new Book(),true);
   }
 
+  @SuppressWarnings("unchecked")
   protected void init(Book book){
     //init champs
     this.book = book;

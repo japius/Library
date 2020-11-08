@@ -162,10 +162,6 @@ public class ProfileView extends GridPane{
             @Override
             public void handle(ActionEvent event) {
             	Category selectedCat = (Category) list_cat_visual.getSelectionModel().getSelectedItem();
-            	System.out.println(text_user[0]);
-            	System.out.println(text_user[1]);
-            	System.out.println(text_user[2]);
-            	System.out.println(selectedCat);
                 user.setUser(text_user[0].getText(),text_user[1].getText(),text_user[2].getText(),selectedCat.getId());
             	int tmp = Main.library.updateData(user);
             	if(tmp<0){

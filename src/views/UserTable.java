@@ -95,6 +95,7 @@ class UpdateUser extends UpdatePopUp {
   private TextField lastName;
   private TextField email;
   private ComboBox categories;
+  private PasswordField password;
    
   UpdateUser(User user){
     super("Modification utilisateur",user);
@@ -111,6 +112,7 @@ class UpdateUser extends UpdatePopUp {
     lastName = new TextField(user.getSurename());
     email = new TextField(user.getMail());
     categories = new ComboBox();
+    password = new PasswordField();
   
     ArrayList<Category> listCat = Main.library.getCategories();
     int index = -1;
@@ -124,17 +126,36 @@ class UpdateUser extends UpdatePopUp {
     ObservableList<Category> obsList = FXCollections.observableArrayList(listCat);
     categories.setItems(obsList);
     categories.getSelectionModel().select(index);
+    if(newItem)
+      categories.getSelectionModel().select(1);
 
   }
     
   protected Control[] getControls(){
-    Control con[] = {firstName,lastName,email,categories};
-    return con;
+    if(Main.library.isAdmin() && newItem){
+      Control con[] = {firstName,lastName,email,password,categories};
+      return con;
+   }else if(newItem){
+      Control con[] = {firstName,lastName,email,password};
+      return con;
+    }else{
+      Control con[] = {firstName,lastName,email,categories};
+      return con;
+    }
   }
 
   protected String[] getNames(){
-    String names[] = {"Prenom", "Nom", "Email", "Categorie"};
-    return names;
+    if(Main.library.isAdmin() && newItem){
+      String names[] = {"Prenom", "Nom", "Email","Mot de Passe", "Categorie"};
+      return names;
+   }else if(newItem){
+      String names[] = {"Prenom", "Nom", "Email", "Mot de Passe"};
+      return names;
+    }else{
+      String names[] = {"Prenom", "Nom", "Email", "Categorie"};
+      return names;
+    }
+
   }
 
   protected String changeItem(){
@@ -143,7 +164,11 @@ class UpdateUser extends UpdatePopUp {
     if(!User.isEmailAdress(mail)){
       return "L'adresse email n'a pas un format valide.";
     }
+    
     user.setUser(firstName.getText(),lastName.getText(),email.getText(),tmp.getId());
+      
+    if(newItem)
+      user.setPass(password.getText());
     return null;
   }
 

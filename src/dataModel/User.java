@@ -1,6 +1,8 @@
 import java.sql.*;  
 import java.util.ArrayList;
 import java.util.regex.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class User extends DataTable{
 	private long id;
@@ -43,6 +45,10 @@ public class User extends DataTable{
 		this.surename=surename.toUpperCase();
 		this.mail=mail.toLowerCase();
 		this.category=category;
+	}
+
+	public void setPass(String password){
+		this.password = password;
 	}
 
 
@@ -124,11 +130,23 @@ public class User extends DataTable{
 
 	// Fonction sur le mot de passe
 	private static String encryptPass(String str){
-		return str; //XXX A modifier
+		try{
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			md.update(str.getBytes());
+			byte byteData[] = md.digest();
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0;i<byteData.length ;i++ ) {
+				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100,16).substring(1));
+			}
+			return sb.toString();
+		}catch(NoSuchAlgorithmException e){
+			e.printStackTrace();
+			return str;
+		}
 	}
 
 	public boolean comparePass(String str){
-		return this.password.equals(str);//XXX A modifier
+		return this.password.equals(encryptPass(str));
 	}
 
 

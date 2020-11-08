@@ -36,6 +36,7 @@ public class MyMenuBar extends HBox{
 	Menu connect;
 	Menu profile;
 	Menu disconnect;
+	Menu inscription;
 
 
 	StackPane mainPane;
@@ -123,7 +124,18 @@ public class MyMenuBar extends HBox{
  
             @Override
             public void handle(MouseEvent event) {
-                Main.library.connect("pierre.mej@mail.com","pass");
+                ConnectView conv = new ConnectView();
+                putTmpView(conv);
+                maj();
+            }
+        });
+
+        Label inscription = new Label("inscription");
+        inscription.setOnMouseClicked(new EventHandler<MouseEvent>() {
+ 
+            @Override
+            public void handle(MouseEvent event) {
+            	UserTable.UpdateUser update = usrv.new UpdateUser();
                 maj();
             }
         });
@@ -151,7 +163,8 @@ public class MyMenuBar extends HBox{
         this.connect.setGraphic(connect);
         this.profile.setGraphic(profile);
         this.disconnect.setGraphic(disconnect);
-        rightBar.getMenus().addAll(this.connect,this.profile,this.disconnect);
+        this.inscription.setGraphic(inscription);
+        rightBar.getMenus().addAll(this.inscription,this.connect,this.profile,this.disconnect);
 
 	}
 
@@ -228,8 +241,10 @@ public class MyMenuBar extends HBox{
         	disconnect.setVisible(true);
         }
 
-        else
+        else{
         	connect.setVisible(true);
+        	inscription.setVisible(true);
+        }
 	}
 
 	private void init(){
@@ -252,6 +267,7 @@ public class MyMenuBar extends HBox{
 		connect = new Menu();
 		profile = new Menu();
 		disconnect = new Menu();
+		inscription = new Menu();
 
 
 		createConnect();
@@ -269,6 +285,7 @@ public class MyMenuBar extends HBox{
 		connect.setVisible(false);
 		profile.setVisible(false);
 		disconnect.setVisible(false);
+		inscription.setVisible(false);
 	}
 
 	private void hideViews(){

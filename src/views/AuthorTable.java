@@ -25,13 +25,20 @@ import javafx.event.EventHandler;
 
 
 public class AuthorTable extends MyTableView<Author>{
-
+  private Oeuvre oeuvre;
 
 	public AuthorTable(){
 		super();
     init();
     refill();
 	}
+
+  public AuthorTable(Oeuvre oeuvre){
+    super();
+    this.oeuvre = oeuvre;
+    init();
+    refill();
+  }
 
 
   // Author
@@ -88,7 +95,10 @@ public class AuthorTable extends MyTableView<Author>{
 
 
   public void refill(){
-    fillView(Main.library.getAuthors());
+    if(oeuvre == null)
+      fillView(Main.library.getAuthors());
+    else
+      fillView(Main.library.getAuthors(oeuvre.getId()));
   }
 
   class UpdateAuthor extends UpdatePopUp {

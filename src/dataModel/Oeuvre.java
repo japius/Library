@@ -127,7 +127,7 @@ public class Oeuvre extends DataTable{
 		if(oeu == null)
 			return -32;
 
-		String query = String.format("Insert into a_ecrit(id_oeuvre, id_auteur) values('%d', '%d'",
+		String query = String.format("Insert into a_ecrit(id_oeuvre, id_auteur) values('%d', '%d')",
 			id_oeuvre, id_author);
 
 		int res = sqlRequest.executeUpdate(query);

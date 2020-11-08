@@ -94,6 +94,10 @@ public class Book extends DataTable{
 		return getListBook(sqlRequest, basicSelect+String.format(" where id_utilisateur = '%d'",id_user));
 	}
 
+	public static ArrayList<Book> getListBook(SqlRequest sqlRequest, Oeuvre oeuvre){
+		return getListBook(sqlRequest, basicSelect+String.format(" NATURAL JOIN edition where id_oeuvre = '%d'",oeuvre.getId()));
+	}
+
 	//Recupération d'un livre
 
 	//Via ID

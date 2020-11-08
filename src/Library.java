@@ -34,7 +34,6 @@ public class Library{
 	}
 
 	public boolean connect(String mail, String password){
-		System.out.println("Try to connect :"+ mail +" , "+password);
 		try{
 			User user = User.getUserByMail(mail, mainDatabase);
 			if(user == null)
@@ -106,6 +105,10 @@ public class Library{
 		return Author.getListAuthor(mainDatabase,id_oeuvre);
 	}
 
+	public ArrayList<Author> getNotAuthors(long id_oeuvre){
+		return Author.getListNotAuthor(mainDatabase,id_oeuvre);
+	}
+
 
 	// Oeuvres
 	public ArrayList<Oeuvre> getOeuvres(){
@@ -129,6 +132,10 @@ public class Library{
 
 	public ArrayList<Book> getBooks(long id_user){
 		return Book.getListBook(mainDatabase,id_user);
+	}
+
+	public ArrayList<Book> getBooks(Oeuvre oeuvre){
+		return Book.getListBook(mainDatabase,oeuvre); 
 	}
 
 	// Liste rouge

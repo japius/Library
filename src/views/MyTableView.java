@@ -97,7 +97,7 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
   			Button validate = new Button("Valider");
   			validate.setOnAction(e-> validate());
 
-			GridPane form = makeGrid(getControls(),getNames(),validate,null);
+			GridPane form = makeGrid(getControls(),getNames(),validate);
 
 			VBox layout = new VBox();
 			layout.getChildren().add(errorLabel);
@@ -157,7 +157,7 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
 			popupwindow.close();
 		}
 
-		protected GridPane makeGrid(Control[] inputs, String[] names, Button validate, Button close){
+		protected GridPane makeGrid(Control[] inputs, String[] names, Button validate){
 			GridPane layout= new GridPane();
 			int i;
   			for(i = 0; i<inputs.length;i++){
@@ -165,9 +165,7 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
   				layout.add(inputs[i],1,i);
   			}
   			if(validate!=null)
-  				layout.add(validate,1,i);
-  			if(close!=null)
-  				layout.add(close,1,i+1);
+  				layout.add(validate,1,i,2,1);
  			return layout;
 		}
 	}

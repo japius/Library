@@ -62,6 +62,10 @@ public class Author extends DataTable{
 		return getListAuthor(sqlRequest, basicSelect + " NATURAL JOIN a_ecrit where id_oeuvre = "+id_oeuvre);
 	}
 
+	public static ArrayList<Author> getListNotAuthor(SqlRequest sqlRequest, long id_oeuvre){
+		return getListAuthor(sqlRequest, basicSelect + " where id_auteur not in (select id_auteur from auteur natural join a_ecrit where id_oeuvre = "+id_oeuvre+")");
+	}
+
 
 
 	//Recupération d'un auteur

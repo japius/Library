@@ -68,10 +68,11 @@ public class OeuvreTable extends MyTableView<Oeuvre>{
     TableRow<Oeuvre> row = new TableRow<>();
     row.setOnMouseClicked(event -> {
         if (! row.isEmpty() && event.getButton()==MouseButton.PRIMARY 
-             && event.getClickCount() == 2 && Main.library.isAdmin()) {
+             && event.getClickCount() == 2) {
 
             Oeuvre selectedItem = row.getItem();
-            new UpdateOeuvre(selectedItem);
+            //new UpdateOeuvre(selectedItem);
+            Main.menubar.putTmpView(new OeuvreView(selectedItem));
         }
     });
     return row;

@@ -23,6 +23,7 @@ import javafx.scene.control.Alert.AlertType;
 
 public class BookTable extends MyTableView<Book>{
   private long id_user = -1;
+  private Oeuvre oeuvre = null;
   TableColumn<Book, String> borrowCol;
   TableColumn<Book, Boolean> dispoCol;
   TableColumn<Book, Void> empruntCol;
@@ -37,6 +38,13 @@ public class BookTable extends MyTableView<Book>{
     super();
     init();
     this.id_user=id_user;
+    refill();
+  }
+
+  public BookTable(Oeuvre oeuvre){
+    super();
+    init();
+    this.oeuvre = oeuvre;
     refill();
   }
 
@@ -152,6 +160,17 @@ public class BookTable extends MyTableView<Book>{
       dispoCol.setVisible(false);
       borrowCol.setVisible(true);
       empruntCol.setVisible(true);
+    }else if(oeuvre != null){
+      fillView(Main.library.getBooks(oeuvre));
+      dispoCol.setVisible(true);
+      if(Main.library.isConnect())
+        empruntCol.setVisible(true);
+      else
+        empruntCol.setVisible(false);
+      if(Main.library.isAdmin())
+        borrowCol.setVisible(true);
+      else
+        borrowCol.setVisible(false);
     }else if(Main.library.isAdmin()){
       fillView(Main.library.getBooks());
       dispoCol.setVisible(true);

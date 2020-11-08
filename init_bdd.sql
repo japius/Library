@@ -57,7 +57,7 @@ create table list_rouge(
 	date_debut date,
 	date_fin date,
 	PRIMARY KEY (id_utilisateur,date_debut,date_fin),
-	FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur)
+	FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur) ON DELETE CASCADE
 );
 
 create table livre(
@@ -83,6 +83,6 @@ create table est_emprunte(
 	id_utilisateur bigint unsigned not null,
 	date_emprunt date not null,
 	PRIMARY KEY (id_livre,id_utilisateur,date_emprunt),
-	FOREIGN KEY (id_livre) REFERENCES livre(id_livre),
-	FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur)
+	FOREIGN KEY (id_livre) REFERENCES livre(id_livre) ON DELETE CASCADE,
+	FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur) ON DELETE CASCADE
 );

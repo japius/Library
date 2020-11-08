@@ -130,15 +130,20 @@ public class Book extends DataTable{
 
 
 	public int borrowBook(SqlRequest sqlRequest, User user){
+		if(user.isOnRedList(sqlRequest)){
+			return -42;
+		}
+
 		Category cat;
 		try{
-			cat = Category.getCategoryById(user.getId(),sqlRequest);
+			cat = Category.getCategoryById(user.getCategory(),sqlRequest);
 		}catch(SQLException e){
 			e.printStackTrace();
 			return -999;
 		}
 
 		ArrayList<Book> books = getListBook(sqlRequest, user.getId());
+		System.out.println(cat);
 		if(cat.getBorrowing()<=books.size())
 			return -41;
 
@@ -150,10 +155,8 @@ public class Book extends DataTable{
 
 		String query = String.format("Insert into est_emprunte values('%d','%d','%s')",getId(),user.getId(),dateSql(actualDate));
 		sqlRequest.executeUpdate(query);
-		System.out.println(query);
 
 		query = String.format("UPDATE livre SET id_utilisateur = '%d', date_debut = '%s', date_fin = '%s' where id_livre = '%d'",user.getId(), dateSql(actualDate),dateSql(endDate),getId());
-		System.out.println(query);
 		int res = sqlRequest.executeUpdate(query);
 		if(res < 0 ) return -999;
 

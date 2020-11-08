@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -14,6 +15,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.Node;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.util.LinkedList;
 
@@ -156,6 +160,11 @@ public class MyMenuBar extends HBox{
             @Override
             public void handle(MouseEvent event) {
             	Main.library.disconnect();
+            	BorderPane bor = new BorderPane();
+            	Text scenetitle = new Text("Au revoir");
+				scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+				bor.setCenter(scenetitle);
+				putTmpView(bor);
             	maj();
             }
         });

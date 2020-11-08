@@ -98,6 +98,10 @@ public class User extends DataTable{
 		return sqlRequest.executeQuery(query);
 	}
 
+	public boolean isOnRedList(SqlRequest sqlRequest){
+		return RedList.isOnRedList(sqlRequest,getId());
+	}
+
 
 
 	//Ajouter un utilisateur

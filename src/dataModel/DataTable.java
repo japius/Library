@@ -30,6 +30,9 @@ public abstract class DataTable{
 			case -41 :
 			return "Il y a deja trop d'emprunts.";
 
+			case -42 :
+			return "L'utilisateur est sur liste rouge.";
+
 			case -999 :
 			return "Erreur dans la base de donees.";
 
@@ -46,6 +49,6 @@ public abstract class DataTable{
 
 	public static  String dateSql(Date date){
 		if(date == null) return "";
-		return String.format("%d-%d-%d",1900+date.getYear(),1+ date.getMonth(),1+ date.getDay());
+		return String.format("%d-%d-%d",1900+date.getYear(),1+ date.getMonth(),date.getDate());
 	}
 }

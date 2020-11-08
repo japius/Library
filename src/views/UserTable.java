@@ -77,7 +77,7 @@ public class UserTable extends MyTableView<User>{
              && event.getClickCount() == 2 && Main.library.isAdmin()) {
 
             User selectedUser = row.getItem();
-            new UpdateUser(selectedUser);
+            Main.menubar.putTmpView(new ProfileView(selectedUser));
         }
     });
     return row;

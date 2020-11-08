@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Date;
+import java.time.*;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -64,20 +65,6 @@ public class RedListTable extends MyTableView<RedList>{
   public void fillView(ArrayList<RedList> items){
     ObservableList<RedList> obsList = FXCollections.observableArrayList(items);
     setItems(obsList);
-
-    /*setRowFactory(tv -> {
-    TableRow<RedList> row = new TableRow<>();
-    row.setOnMouseClicked(event -> {
-        if (! row.isEmpty() && event.getButton()==MouseButton.PRIMARY 
-             && event.getClickCount() == 2 && Main.library.isAdmin()) {
-
-            RedList selectedItem = row.getItem();
-            new UpdateRedList(selectedItem);
-        }
-    });
-    return row;
-  });*/
-
   }
 
   public void refill(){
@@ -89,82 +76,60 @@ public class RedListTable extends MyTableView<RedList>{
       fillView(Main.library.getRedLists());
   }
 
-  /*class UpdateRedList extends UpdatePopUp {
-  private RedList book;
+  class UpdateRedList extends UpdatePopUp {
+  private RedList redList;
 
-  private TextField quantity;
-  private ComboBox editions;
+  private DatePicker date;
 
    
-  UpdateRedList(RedList book){
-    super("Modification d'un livre",book);
+  UpdateRedList(RedList redList){
+    super("Mise sur liste rouge",redList,true);
   }
 
   UpdateRedList(){
-    super("Creation d'un livre",new RedList(),true);
+    super("Mise sur liste rouge",new RedList(),true);
   }
 
-  protected void init(RedList book){
+  protected void init(RedList redList){
     //init champs
-    this.book = book;
-    quantity = new TextField("1");
-    editions = new ComboBox();
+    this.redList = redList;
+    date = new DatePicker();
+    date.setDayCellFactory(picker -> new DateCell() {
+        public void updateItem(LocalDate date, boolean empty) {
+            super.updateItem(date, empty);
+            LocalDate today = LocalDate.now();
 
-    ArrayList<Edition> listEdi = Main.library.getEditions();
-   
-    ObservableList<Edition> obsList = FXCollections.observableArrayList(listEdi);
-    editions.setItems(obsList);
-
-    if(newItem) return;
-
-    int index = 0;
-    for(Edition elem : obsList){
-      if(elem.equals(book.getEdition()))
-        break;
-      index++;
-    }
-    editions.getSelectionModel().select(index);
+            setDisable(empty || date.compareTo(today) < 0 );
+        }
+    });
 
   }
     
   protected Control[] getControls(){
 
-    Control con[];
-    if(newItem){ 
-      con = new Control[2];
-      con[0] = quantity;
-    }else con = new Control[1];
-    con[con.length-1] = editions;
+    Control con[] = {date};
     return con;
   }
 
   protected String[] getNames(){
-    String names[];
-    if(newItem){ 
-      names = new String[2];
-      names[0] = "Quantite de nouveau livre";
-    }else names = new String[1]; 
-    names[names.length-1] = "Edition";
+    String names[] = {"Date de fin :"};
     return names;
   }
 
   protected String changeItem(){
-    Edition edition = (Edition) editions.getSelectionModel().getSelectedItem();
-    int myquantity =  0;
-    try{
-      myquantity = Integer.parseInt(this.quantity.getText());
-    }catch(NumberFormatException e){
-      return "La quantite doit etre un entier.";
-    }
-    book.setRedList(edition,null,null,null,myquantity);
-    System.out.println(book);
+    LocalDate localDate = date.getValue();
+    Date actualDate = new Date();
+    Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+    System.out.println(actualDate);
+    System.out.println(Date.from(instant));
+    redList.setRedList(actualDate,Date.from(instant));
     return null;
   }
 
   protected RedList getItem(){
-    return book;
+    return redList;
   }
 
-}*/
+}
 
 }

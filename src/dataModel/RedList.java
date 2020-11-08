@@ -39,10 +39,16 @@ public class RedList extends DataTable{
 	public String getUser(){return user.toString();}
 
 	//Setters
-	public void setRedList(long id, Date begin, Date end){
-		this.id_user = id;
+	public void setRedList(Date begin, Date end){
 		this.begin_date = begin;
 		this.end_date = end;
+	}
+
+	public void setUser(User user){
+		this.user = user;
+		if(user!=null){
+			id_user = user.getId();
+		}
 	}
 
 
@@ -76,14 +82,21 @@ public class RedList extends DataTable{
 		return getListRedList(sqlRequest,basicSelect+String.format(" where date_fin < '%s'",dateSql(date)));
 	}
 
+	public static boolean isOnRedList(SqlRequest sqlRequest, long id_user){
+		Date date = new Date();
+		return getListRedList(sqlRequest,basicSelect+String.format(" where date_fin < '%s' and id_utilisateur = '%d'",dateSql(date),id_user)).size() != 0;
+	}
+
 
 	//Ajouter a la liste rouge
 	public int insertValue(SqlRequest sqlRequest){
 		String query = String.format("Insert into list_rouge(id_utilisateur,date_debut,date_fin) values ('%d', '%s', '%s')",
 			id_user,dateSql(begin_date), dateSql(end_date));
 
+		System.out.println(query);
+
 		int res = sqlRequest.executeUpdate(query);
-		return res;
+		return 0;
 	}
 
 

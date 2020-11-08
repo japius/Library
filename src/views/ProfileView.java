@@ -60,6 +60,7 @@ public class ProfileView extends GridPane{
 		info_emprunt = new BorderPane();
 		hist_rouge = new BorderPane();
 
+
 		init_emprunt();
 		init_user();
 		init_rouge();
@@ -104,9 +105,26 @@ public class ProfileView extends GridPane{
 		hist_rouge.setTop(new Label("Historique de la liste rouge"));
 		RedListTable redt = new RedListTable(user.getId(),false);
 		hist_rouge.setCenter(redt);
+
+		Button putOnRedList = new Button("Mettre sur liste rouge");
+		if(!Main.library.isAdmin())
+			putOnRedList.setVisible(false);
+		putOnRedList.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            	RedList redList = new RedList();
+            	redList.setUser(user);
+                RedListTable.UpdateRedList update = redt.new UpdateRedList(redList);
+            }
+        });
+
+        hist_rouge.setBottom(putOnRedList);
+
 	}
 
 	private void init_user(){
+
+		info_user.setAlignment(Pos.CENTER);
 		text_user = new TextField[5];
 
 		info_user.add(new Label("Prenom"),0,0);

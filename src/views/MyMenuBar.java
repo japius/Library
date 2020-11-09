@@ -121,6 +121,28 @@ public class MyMenuBar extends HBox{
 		leftBar.getMenus().add(viewMenu);
 	}
 
+	public void createTheme(){
+		Menu themeMenu = new Menu("Theme");
+
+		MenuItem sombre = new MenuItem("Sombre");
+		sombre.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				Main.changeTheme(true);
+			}
+		});
+
+		MenuItem claire = new MenuItem("Claire");
+		claire.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				Main.changeTheme(false);
+			}
+		});
+		themeMenu.getItems().addAll(sombre,claire);
+		leftBar.getMenus().add(themeMenu);
+	}
+
 
 	private void createConnect(){
 		Label connect = new Label("Connexion");
@@ -256,6 +278,17 @@ public class MyMenuBar extends HBox{
         }
 	}
 
+
+	public void majTheme(){
+		if(tmpView == null)
+			return;
+		if(Main.darkMode)
+			tmpView.setStyle("-fx-background-color: #252525");
+		else
+			tmpView.setStyle("-fx-background-color: #f3f3f3");
+
+	}
+
 	private void init(){
 		usrv = new UserTable();
 		catv = new CategoryTable();
@@ -282,6 +315,7 @@ public class MyMenuBar extends HBox{
 		createConnect();
 		createAffichage();
 		createNouveau();
+		createTheme();
 
 		Region spacer = new Region();
 		spacer.getStyleClass().add("menu-bar");
@@ -316,10 +350,9 @@ public class MyMenuBar extends HBox{
 
 	public void putTmpView(Node tmpView){
 		hideViews();
-		if(Main.darkMode)
-			tmpView.setStyle("-fx-background-color: #252525");
 		this.tmpView = tmpView;
 		mainPane.getChildren().add(tmpView);
+		majTheme();
 	}
 
 	private void putUserView(){

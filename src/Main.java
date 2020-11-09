@@ -34,7 +34,8 @@ public class Main extends Application{
     static Library library;
     static MyMenuBar menubar;
     static boolean noGraphic = false;
-    static boolean darkMode = true;
+    static boolean darkMode;
+    private static Scene scene;
 	
 	public static void main(String[] args) throws SQLException{
 		library = new Library();
@@ -85,14 +86,21 @@ public class Main extends Application{
         menubar.putTmpView(new ConnectView());
 
         primaryStage.setTitle("Bibliotheque de la mort");
-        Scene scene = new Scene(rootAndBar, 700, 700);
+        scene = new Scene(rootAndBar, 1000, 700);
+        changeTheme(false);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public static void changeTheme(boolean dark){
+        darkMode = dark;
         if(darkMode){
             new JMetro(scene, Style.DARK);
         }
         else
             new JMetro(scene, Style.LIGHT);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+
+        menubar.majTheme();
     }
 
     @Override

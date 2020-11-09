@@ -13,23 +13,24 @@ SRCFILE := $(shell find $(SRC) -name *.java)
 
 JDBC = mysql_con_java.jar
 
+JM = jmetro.jar
+
 MAIN = Main
 
 FLAG = -Xlint:deprecation
 
 
 
-
 all : compile
 
 clean :
-	rm $(CLASS)/*
+	rm $(CLASS)/*.class
 
 compile : 
-	$(CC) $(FLAG) -d $(CLASS) -cp $(JDBC) $(SRCFILE)
+	$(CC) $(FLAG) -d $(CLASS) -cp "$(JDBC);$(LIB)/$(JM)" $(SRCFILE)
 
 run :
-	$(EXEC) -cp "$(CLASS);$(LIB)/$(JDBC)" $(MAIN)
+	$(EXEC) -cp "$(CLASS);$(LIB)/$(JDBC);$(LIB)/$(JM)" $(MAIN)
 
 
 mysql :

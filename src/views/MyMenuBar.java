@@ -134,7 +134,7 @@ public class MyMenuBar extends HBox{
             }
         });
 
-        Label inscription = new Label("inscription");
+        Label inscription = new Label("Inscription");
         inscription.setOnMouseClicked(new EventHandler<MouseEvent>() {
  
             @Override
@@ -316,6 +316,8 @@ public class MyMenuBar extends HBox{
 
 	public void putTmpView(Node tmpView){
 		hideViews();
+		if(Main.darkMode)
+			tmpView.setStyle("-fx-background-color: #252525");
 		this.tmpView = tmpView;
 		mainPane.getChildren().add(tmpView);
 	}

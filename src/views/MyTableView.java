@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import jfxtras.styles.jmetro.*;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -114,6 +116,14 @@ public abstract class MyTableView<K extends DataTable> extends TableView<K>{
         		    }
         		}
   			});
+
+			if(Main.darkMode){
+            	new JMetro(scene, Style.DARK);
+            	layout.setStyle("-fx-background-color: #252525");
+			}
+        	else{
+            	new JMetro(scene, Style.LIGHT);
+        	}
 
   			popupwindow.setScene(scene);
         	popupwindow.showAndWait();

@@ -3,11 +3,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 
+import jfxtras.styles.jmetro.*;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.css.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableRow;
@@ -31,6 +34,7 @@ public class Main extends Application{
     static Library library;
     static MyMenuBar menubar;
     static boolean noGraphic = false;
+    static boolean darkMode = true;
 	
 	public static void main(String[] args) throws SQLException{
 		library = new Library();
@@ -78,8 +82,16 @@ public class Main extends Application{
         rootAndBar.setTop(menubar);
         rootAndBar.setCenter(root);
 
+        menubar.putTmpView(new ConnectView());
+
         primaryStage.setTitle("Bibliotheque de la mort");
-        primaryStage.setScene(new Scene(rootAndBar, 700, 700));
+        Scene scene = new Scene(rootAndBar, 700, 700);
+        if(darkMode){
+            new JMetro(scene, Style.DARK);
+        }
+        else
+            new JMetro(scene, Style.LIGHT);
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 

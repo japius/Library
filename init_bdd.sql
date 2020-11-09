@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS library;
+USE library;
+
 drop table if exists est_emprunte cascade;
 drop table if exists a_ecrit cascade;
 drop table if exists livre cascade;
@@ -16,6 +19,7 @@ create table auteur(
 	prenom varchar(100),
 	annee int
 );
+
 create table oeuvre(
 	id_oeuvre serial primary key,
 	titre varchar(100),
@@ -51,6 +55,9 @@ create table utilisateur(
 	id_categorie bigint unsigned not null,
 	FOREIGN KEY (id_categorie) REFERENCES categorie(id_categorie)
 );
+
+INSERT into utilisateur(nom,prenom,mail,password,id_categorie) values ("ADMIN", "admin", "admin@mail.fr","d74ff0ee8da3b9806b18c877dbf29bbde50b5bd8e4dad7a3a725000feb82e8f1",1);
+
 
 create table list_rouge(
 	id_utilisateur bigint unsigned,

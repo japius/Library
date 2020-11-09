@@ -137,7 +137,7 @@ public class EditionTable extends MyTableView<Edition>{
   protected String changeItem(){
     Oeuvre oeuv = (Oeuvre) oeuvres.getSelectionModel().getSelectedItem();
     int myyear = 0;
-    int myisbn = 0;
+    long myisbn = 0;
     try{
       myyear = Integer.parseInt(this.year.getText());
     }catch(NumberFormatException e){
@@ -145,7 +145,7 @@ public class EditionTable extends MyTableView<Edition>{
     }
 
     try{
-      myisbn = Integer.parseInt(this.isbn.getText());
+      myisbn = Long.parseLong(this.isbn.getText());
       if(myisbn < 0)
         return "Le numero ISBN doit etre un entier positif.";
     }catch(NumberFormatException e){

@@ -12,10 +12,10 @@ public class Edition extends DataTable{
 
 	private Edition(ResultSet rs){
 		try{
-			isbn = rs.getInt("ISBN");
+			isbn = rs.getLong("ISBN");
 			editor = rs.getString("editeur");
 			year = rs.getInt("annee");
-			id_oeuvre = rs.getInt("id_oeuvre");
+			id_oeuvre = rs.getLong("id_oeuvre");
 
 		}catch(SQLException e ){
 			e.printStackTrace();
@@ -35,7 +35,7 @@ public class Edition extends DataTable{
 	public int getYear(){return year;}
 	public Oeuvre getOeuvre(){return oeuvre;}
 	public long getIdoeuvre(){return id_oeuvre;}
-	public String getAuthors(){return oeuvre.getAuthors();}
+	public String getAuthors(){return oeuvre != null ? oeuvre.getAuthors() : "";}
 
 	//Setters
 	public void setEdition(long isbn,String editor, int year, Oeuvre oeuvre){

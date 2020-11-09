@@ -43,7 +43,7 @@ public class SqlRequest{
 			Statement stmt=con.createStatement();  
 			ResultSet rs=stmt.executeQuery("select * from "+table);  
 			while(rs.next())  
-				System.out.println(rs.getInt("id_utilisateur")+"  "+rs.getString("mail")); 
+				System.out.println(rs.getLong("id_utilisateur")+"  "+rs.getString("mail")); 
 		}catch(SQLException e){
 			e.printStackTrace();
 			return false;
@@ -64,7 +64,8 @@ public class SqlRequest{
 
 	public int executeUpdate(String query){
 		try{
-			Statement stmt=con.createStatement();  
+			Statement stmt=con.createStatement();
+			System.out.println(query); 
 			return stmt.executeUpdate(query);
 		}catch(SQLException e){
 			e.printStackTrace();

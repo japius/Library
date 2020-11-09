@@ -17,8 +17,8 @@ public class Book extends DataTable{
 
 	private Book(ResultSet rs){
 		try{
-			id = rs.getInt("id_livre");
-			isbn = rs.getInt("isbn");
+			id = rs.getLong("id_livre");
+			isbn = rs.getLong("isbn");
 			try{
 				begin_date = new Date(rs.getDate("date_debut").getTime());
 				end_date = new Date(rs.getDate("date_fin").getTime());
@@ -26,7 +26,7 @@ public class Book extends DataTable{
 				begin_date = null;
 				end_date = null;
 			}
-			id_user = rs.getInt("id_utilisateur");
+			id_user = rs.getLong("id_utilisateur");
 
 		}catch(SQLException e ){
 			e.printStackTrace();

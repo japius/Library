@@ -9,9 +9,9 @@ public class Library{
 	private SqlRequest mainDatabase;
 
 
-	public Library(){
+	public Library(String username, String password){
 		System.out.println("Lancement de la bibliotheque");
-		mainDatabase = new SqlRequest("library","mejane","password");
+		mainDatabase = new SqlRequest("library",username,password);
 		mainDatabase.connect();
 	}
 

@@ -11,7 +11,7 @@ public class Category extends DataTable{
 
 	private Category(ResultSet rs){
 		try{
-			id = rs.getInt("id_categorie");
+			id = rs.getLong("id_categorie");
 			name = rs.getString("nom");
 			borrowing = rs.getInt("nombre_emprunt");
 			time = rs.getInt("duree");

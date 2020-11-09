@@ -1,7 +1,7 @@
 #CC = javac
-CC = '/mnt/c/Program Files (x86)/Java/jdk1.8/bin/javac.exe'
+CC = 'javac'
 #EXEC = java
-EXEC = '/mnt/c/Program Files (x86)/Java/jdk1.8/bin/java.exe'
+EXEC = 'java'
 
 CLASS = bin
 
@@ -17,7 +17,12 @@ JM = jmetro.jar
 
 MAIN = Main
 
-FLAG = -Xlint:deprecation
+FLAG = -Xlint:deprecation	
+
+USER = mejane
+
+PASSWORD = password
+
 
 
 
@@ -27,12 +32,18 @@ clean :
 	rm $(CLASS)/*.class
 
 compile : 
-	$(CC) $(FLAG) -d $(CLASS) -cp "$(JDBC);$(LIB)/$(JM)" $(SRCFILE)
+	$(CC) $(FLAG) -d $(CLASS) -cp "$(JDBC):$(LIB)/$(JM)" $(SRCFILE)
 
 run :
-	$(EXEC) -cp "$(CLASS);$(LIB)/$(JDBC);$(LIB)/$(JM)" $(MAIN)
+	$(EXEC) -cp "$(CLASS):$(LIB)/$(JDBC):$(LIB)/$(JM)" $(MAIN) $(USER) $(PASSWORD)
 
 
 mysql :
 	sudo service mysql start
+
+initBDD :
+	sudo mysql < ./init_bdd.sql
+	sudo mysql < fill_bdd.sql
+
+
 

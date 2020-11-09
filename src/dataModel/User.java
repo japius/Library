@@ -16,12 +16,12 @@ public class User extends DataTable{
 
 	private User(ResultSet rs){
 		try{
-			id = rs.getInt("id_utilisateur");
+			id = rs.getLong("id_utilisateur");
 			name = rs.getString("prenom");
 			surename = rs.getString("nom");
 			mail=rs.getString("mail");
 			password = rs.getString("password");
-			category = rs.getInt("id_categorie");
+			category = rs.getLong("id_categorie");
 		}catch(SQLException e ){
 			e.printStackTrace();
 			// XXX a revoir

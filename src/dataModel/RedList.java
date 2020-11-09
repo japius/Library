@@ -12,7 +12,7 @@ public class RedList extends DataTable{
 
 	private RedList(ResultSet rs){
 		try{
-			id_user = rs.getInt("id_utilisateur");
+			id_user = rs.getLong("id_utilisateur");
 			try{
 				begin_date = new Date(rs.getDate("date_debut").getTime());
 				end_date = new Date(rs.getDate("date_fin").getTime());

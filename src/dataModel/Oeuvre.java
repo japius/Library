@@ -11,7 +11,7 @@ public class Oeuvre extends DataTable{
 
 	private Oeuvre(ResultSet rs){
 		try{
-			id = rs.getInt("id_oeuvre");
+			id = rs.getLong("id_oeuvre");
 			title = rs.getString("titre");
 			year = rs.getInt("annee");
 

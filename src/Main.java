@@ -38,7 +38,13 @@ public class Main extends Application{
     private static Scene scene;
 	
 	public static void main(String[] args) throws SQLException{
-		library = new Library();
+
+        if(args.length < 2){
+            System.out.println("Veuillez donner en argument l'username pour la base de donnée et le mot de passe");
+        }
+
+        System.out.println(args[0]);
+        library = new Library(args[0], args[1]);
 
         if(noGraphic)
             noGraphicVersion(args);
